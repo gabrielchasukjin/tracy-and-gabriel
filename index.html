@@ -15,9 +15,9 @@ html{scroll-behavior:smooth}
 body{background:var(--cream);font-family:'Lora',serif;color:var(--brown);overflow-x:hidden}
 
 /* ===== SAKURA PETAL (CSS shape) ===== */
-.petal-fall{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9990;overflow:hidden}
-.petal-fall2{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:3;overflow:hidden}
-.petal{position:absolute;top:-30px;border-radius:150% 0 150% 0;opacity:0}
+.petal-fall{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9990;overflow:hidden;contain:strict;will-change:auto}
+.petal-fall2{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:3;overflow:hidden;contain:strict;will-change:auto}
+.petal{position:absolute;top:-30px;border-radius:150% 0 150% 0;opacity:0;will-change:transform,opacity;backface-visibility:hidden;transform:translateZ(0)}
 .petal.a{animation:pf1 linear infinite}
 .petal.b{animation:pf2 linear infinite}
 .petal.c{animation:pf3 linear infinite}
@@ -108,7 +108,7 @@ body{background:var(--cream);font-family:'Lora',serif;color:var(--brown);overflo
 .month .pill .note{display:block;font-family:'Dancing Script',cursive;font-size:18px;font-weight:400;letter-spacing:0;margin-top:2px;opacity:.9}
 
 /* ===== TIMELINE ENTRY ===== */
-.tl{position:relative;z-index:2;margin-bottom:36px;display:flex;align-items:flex-start;opacity:0;transform:translateY(35px);transition:opacity .7s ease,transform .7s ease}
+.tl{position:relative;z-index:2;margin-bottom:36px;display:flex;align-items:flex-start;opacity:0;transform:translateY(35px);transition:opacity .7s ease,transform .7s ease;will-change:opacity,transform}
 .tl.vis{opacity:1;transform:translateY(0)}
 .tl.L{flex-direction:row;padding-right:calc(50% + 32px)}
 .tl.R{flex-direction:row-reverse;padding-left:calc(50% + 32px)}
@@ -155,8 +155,8 @@ body{background:var(--cream);font-family:'Lora',serif;color:var(--brown);overflo
 .sakura-tree{position:absolute;pointer-events:none;z-index:0}
 .sakura-tree svg{display:block}
 /* hero trees */
-.hero-tree-l{position:absolute;left:-40px;bottom:0;z-index:0;pointer-events:none;opacity:.85}
-.hero-tree-r{position:absolute;right:-40px;bottom:0;z-index:0;pointer-events:none;opacity:.85;transform:scaleX(-1)}
+.hero-tree-l{position:absolute;left:-40px;bottom:0;z-index:0;pointer-events:none;opacity:.85;will-change:transform}
+.hero-tree-r{position:absolute;right:-40px;bottom:0;z-index:0;pointer-events:none;opacity:.85;transform:scaleX(-1);will-change:transform}
 /* timeline side trees */
 .tl-tree{position:absolute;pointer-events:none;z-index:0;opacity:.18}
 .tl-tree.left{left:-60px}.tl-tree.right{right:-60px;transform:scaleX(-1)}
@@ -781,61 +781,52 @@ document.getElementById('endTreeR').innerHTML = sakuraTreeSVG(240, 400);
   });
 })();
 
-// ========== FALLING SAKURA PETALS (lots and lots!) ==========
+// ========== FALLING SAKURA PETALS (optimized) ==========
 (function() {
   var c = document.getElementById('pf');
-  var colors = ['#ffc1d4','#ffaec0','#ffd6e3','#ffe0eb','#f8bbd0','#f48fb1','#fff0f5','#ffcdd2','#fce4ec','#f8c8d8'];
+  var colors = ['#ffc1d4','#ffaec0','#ffd6e3','#ffe0eb','#f8bbd0','#f48fb1','#fff0f5','#ffcdd2'];
   var classes = ['a','b','c','d','e','f'];
-  // Layer 1: 120 small-medium petals
-  for (var i = 0; i < 120; i++) {
+  // 60 small-medium petals
+  for (var i = 0; i < 60; i++) {
     var p = document.createElement('div');
     p.className = 'petal ' + classes[Math.floor(Math.random() * classes.length)];
-    var sz = 8 + Math.random() * 18;
+    var sz = 8 + Math.random() * 16;
     var col = colors[Math.floor(Math.random() * colors.length)];
-    p.style.cssText = 'width:'+sz+'px;height:'+(sz*.6)+'px;left:'+Math.random()*100+'%;background:linear-gradient(135deg,'+col+',#fff);animation-duration:'+(8+Math.random()*18)+'s;animation-delay:'+(Math.random()*25)+'s;box-shadow:0 0 '+(2+Math.random()*5)+'px '+col;
+    p.style.cssText = 'width:'+sz+'px;height:'+(sz*.6)+'px;left:'+Math.random()*100+'%;background:linear-gradient(135deg,'+col+',#fff);animation-duration:'+(10+Math.random()*20)+'s;animation-delay:'+(Math.random()*25)+'s';
     c.appendChild(p);
   }
-  // Layer 2: 40 larger, more visible leaves
-  for (var i = 0; i < 40; i++) {
+  // 20 larger visible leaves
+  for (var i = 0; i < 20; i++) {
     var p = document.createElement('div');
     p.className = 'petal ' + classes[Math.floor(Math.random() * classes.length)];
-    var sz = 18 + Math.random() * 20;
+    var sz = 18 + Math.random() * 18;
     var col = colors[Math.floor(Math.random() * colors.length)];
-    p.style.cssText = 'width:'+sz+'px;height:'+(sz*.55)+'px;left:'+Math.random()*100+'%;background:linear-gradient(135deg,'+col+' 40%,rgba(255,255,255,.7));animation-duration:'+(12+Math.random()*22)+'s;animation-delay:'+(Math.random()*20)+'s;box-shadow:0 1px '+(3+Math.random()*6)+'px '+col+';filter:blur(0.3px)';
+    p.style.cssText = 'width:'+sz+'px;height:'+(sz*.55)+'px;left:'+Math.random()*100+'%;background:linear-gradient(135deg,'+col+' 40%,rgba(255,255,255,.7));animation-duration:'+(14+Math.random()*22)+'s;animation-delay:'+(Math.random()*20)+'s';
     c.appendChild(p);
   }
-  // Layer 3: 25 tiny fast petals for depth
-  for (var i = 0; i < 25; i++) {
+  // 8 SVG sakura blossoms floating down
+  for (var i = 0; i < 8; i++) {
     var p = document.createElement('div');
     p.className = 'petal ' + classes[Math.floor(Math.random() * classes.length)];
-    var sz = 4 + Math.random() * 7;
-    var col = colors[Math.floor(Math.random() * colors.length)];
-    p.style.cssText = 'width:'+sz+'px;height:'+(sz*.65)+'px;left:'+Math.random()*100+'%;background:'+col+';animation-duration:'+(5+Math.random()*10)+'s;animation-delay:'+(Math.random()*15)+'s;filter:blur(1px)';
-    c.appendChild(p);
-  }
-  // Layer 4: 15 SVG sakura flower shapes floating down (full blossoms, not just leaves)
-  for (var i = 0; i < 15; i++) {
-    var p = document.createElement('div');
-    p.className = 'petal ' + classes[Math.floor(Math.random() * classes.length)];
-    var fsz = 14 + Math.random() * 22;
-    p.style.cssText = 'left:'+Math.random()*100+'%;animation-duration:'+(14+Math.random()*24)+'s;animation-delay:'+(Math.random()*30)+'s;border-radius:0;background:none;box-shadow:none';
+    var fsz = 14 + Math.random() * 18;
+    p.style.cssText = 'left:'+Math.random()*100+'%;animation-duration:'+(16+Math.random()*24)+'s;animation-delay:'+(Math.random()*30)+'s;border-radius:0;background:none';
     p.innerHTML = sakuraSVG(fsz);
     c.appendChild(p);
   }
 })();
 
-// ========== BACKGROUND FLOATING SAKURA LEAVES (layer 2, behind content) ==========
+// ========== BACKGROUND FLOATING SAKURA LEAVES (layer 2) ==========
 (function() {
   var c = document.getElementById('pf2');
-  var colors = ['#ffc1d4','#ffd6e3','#f8bbd0','#fce4ec','#ffaec0','#f8c8d8'];
+  var colors = ['#ffc1d4','#ffd6e3','#f8bbd0','#fce4ec','#ffaec0'];
   var classes = ['a','b','c','d','e','f'];
-  // 60 large soft background petals
-  for (var i = 0; i < 60; i++) {
+  // 30 large soft background petals
+  for (var i = 0; i < 30; i++) {
     var p = document.createElement('div');
     p.className = 'petal ' + classes[Math.floor(Math.random() * classes.length)];
-    var sz = 20 + Math.random() * 30;
+    var sz = 20 + Math.random() * 26;
     var col = colors[Math.floor(Math.random() * colors.length)];
-    p.style.cssText = 'width:'+sz+'px;height:'+(sz*.55)+'px;left:'+Math.random()*100+'%;background:linear-gradient(135deg,'+col+',rgba(255,255,255,.6));animation-duration:'+(16+Math.random()*28)+'s;animation-delay:'+(Math.random()*35)+'s;box-shadow:0 0 '+(4+Math.random()*8)+'px '+col+';filter:blur(1.5px)';
+    p.style.cssText = 'width:'+sz+'px;height:'+(sz*.55)+'px;left:'+Math.random()*100+'%;background:linear-gradient(135deg,'+col+',rgba(255,255,255,.5));animation-duration:'+(18+Math.random()*28)+'s;animation-delay:'+(Math.random()*35)+'s;opacity:.4';
     c.appendChild(p);
   }
 })();
@@ -924,27 +915,29 @@ var obs = new IntersectionObserver(function(entries) {
 }, { threshold: .1, rootMargin: '0px 0px -20px 0px' });
 document.querySelectorAll('.tl,.grid,.mile,.cdiv,.letter,.reasons,.lyric,.spotlight').forEach(function(el) { obs.observe(el); });
 
-// ========== PARALLAX SCROLLING ==========
+// ========== PARALLAX SCROLLING (rAF throttled) ==========
 (function() {
-  var heroTrees = document.querySelectorAll('.hero-tree-l,.hero-tree-r');
+  var heroTreeL = document.querySelector('.hero-tree-l');
+  var heroTreeR = document.querySelector('.hero-tree-r');
   var heroFlower = document.querySelector('.hero-flower');
   var heroCats = document.querySelector('.hero-cats');
-  var tlTrees = document.querySelectorAll('.tl-tree');
+  var ticking = false;
 
   window.addEventListener('scroll', function() {
-    var sy = window.scrollY;
-    // Hero elements parallax
-    heroTrees.forEach(function(t) {
-      t.style.transform = (t.classList.contains('hero-tree-r') ? 'scaleX(-1) ' : '') + 'translateY(' + (sy * 0.15) + 'px)';
-    });
-    if (heroFlower) heroFlower.style.transform = 'translateY(' + (sy * 0.08) + 'px)';
-    if (heroCats) heroCats.style.transform = 'translateY(' + (sy * 0.05) + 'px)';
-    // Timeline trees subtle parallax
-    tlTrees.forEach(function(t) {
-      var rect = t.getBoundingClientRect();
-      var offset = (rect.top - window.innerHeight / 2) * 0.04;
-      t.style.marginTop = offset + 'px';
-    });
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(function() {
+        var sy = window.scrollY;
+        if (sy < window.innerHeight * 1.2) {
+          // Only parallax hero elements when hero is in view
+          if (heroTreeL) heroTreeL.style.transform = 'translateY(' + (sy * 0.12) + 'px)';
+          if (heroTreeR) heroTreeR.style.transform = 'scaleX(-1) translateY(' + (sy * 0.12) + 'px)';
+          if (heroFlower) heroFlower.style.transform = 'translateY(' + (sy * 0.06) + 'px)';
+          if (heroCats) heroCats.style.transform = 'translateY(' + (sy * 0.04) + 'px)';
+        }
+        ticking = false;
+      });
+    }
   }, { passive: true });
 })();
 
