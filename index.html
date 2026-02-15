@@ -533,13 +533,6 @@ body.site-active a,body.site-active .card img,body.site-active .lb-x,body.site-a
     <p class="ltxt" id="letterText"></p>
     <div id="endCats" style="margin:20px 0 8px;display:flex;justify-content:center"></div>
     <p class="sig" id="sigText" style="opacity:0">Forever yours, Gabriel</p>
-    <div class="live-counter" id="liveCounter" style="opacity:0">
-      <div class="counter-box"><span class="num" id="cDays">0</span><span class="lbl">Days</span></div>
-      <div class="counter-box"><span class="num" id="cHours">0</span><span class="lbl">Hours</span></div>
-      <div class="counter-box"><span class="num" id="cMins">0</span><span class="lbl">Minutes</span></div>
-      <div class="counter-box"><span class="num" id="cSecs">0</span><span class="lbl">Seconds</span></div>
-    </div>
-    <p class="days" style="margin-top:16px;opacity:0" id="counterLabel">of loving you and counting</p>
   </div>
 </section>
 
@@ -553,6 +546,13 @@ body.site-active a,body.site-active .card img,body.site-active .lb-x,body.site-a
     </button>
     <div class="voice-lines" id="voiceLines"></div>
     <div class="voice-progress" id="voiceProgress"><div class="voice-progress-bar" id="voiceBar"></div></div>
+    <div class="live-counter" id="liveCounter" style="opacity:0;margin-top:30px">
+      <div class="counter-box"><span class="num" id="cDays">0</span><span class="lbl">Days</span></div>
+      <div class="counter-box"><span class="num" id="cHours">0</span><span class="lbl">Hours</span></div>
+      <div class="counter-box"><span class="num" id="cMins">0</span><span class="lbl">Minutes</span></div>
+      <div class="counter-box"><span class="num" id="cSecs">0</span><span class="lbl">Seconds</span></div>
+    </div>
+    <p class="days" style="margin-top:14px;opacity:0" id="counterLabel">of loving you and counting</p>
   </div>
   <audio id="voiceAudio" src="voice-message.m4a" preload="auto"></audio>
 </section>
@@ -1022,18 +1022,12 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') clb()
           setTimeout(function() { ch.classList.add('show'); }, delay);
           delay += 30;
         });
-        // After typewriter finishes, show signature + counter
+        // After typewriter finishes, show signature + confetti
         setTimeout(function() {
           document.getElementById('sigText').style.transition = 'opacity .8s ease';
           document.getElementById('sigText').style.opacity = '1';
-        }, delay + 200);
-        setTimeout(function() {
-          document.getElementById('liveCounter').style.transition = 'opacity .8s ease';
-          document.getElementById('liveCounter').style.opacity = '1';
-          document.getElementById('counterLabel').style.transition = 'opacity .8s ease';
-          document.getElementById('counterLabel').style.opacity = '1';
           startConfetti();
-        }, delay + 600);
+        }, delay + 200);
       }
     });
   }, { threshold: .2 });
@@ -1287,12 +1281,21 @@ function startConfetti() {
     playing = false;
     btn.innerHTML = playSvg;
     btn.classList.remove('playing');
-    // All lines stay visible, remove active/done styling
+    // All lines stay visible
     vlines.forEach(function(v) {
       v.classList.remove('active');
       v.classList.remove('done');
       v.classList.add('show');
     });
+    // Reveal the live counter
+    setTimeout(function() {
+      document.getElementById('liveCounter').style.transition = 'opacity 1s ease';
+      document.getElementById('liveCounter').style.opacity = '1';
+    }, 500);
+    setTimeout(function() {
+      document.getElementById('counterLabel').style.transition = 'opacity 1s ease';
+      document.getElementById('counterLabel').style.opacity = '1';
+    }, 1000);
   });
 })();
 </script>
