@@ -260,6 +260,25 @@ body.site-active a,body.site-active .card img,body.site-active .lb-x,body.site-a
 .spotlight .spot-cap{font-family:'Dancing Script',cursive;font-size:20px;color:var(--brown);margin-top:8px}
 .spotlight .spot-date{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--branch);margin-top:4px}
 
+/* ===== VOICE MESSAGE ===== */
+.voice-section{position:relative;z-index:1;text-align:center;padding:60px 20px 100px;background:linear-gradient(180deg,var(--s3) 0%,var(--s2) 30%,var(--s1) 100%);overflow:hidden}
+.voice-box{max-width:560px;margin:0 auto;position:relative}
+.voice-box h3{font-family:'Dancing Script',cursive;font-size:clamp(24px,5vw,34px);color:var(--s5);margin-bottom:24px}
+.voice-play{width:80px;height:80px;border-radius:50%;border:3px solid var(--s5);background:linear-gradient(135deg,#fff,var(--s1));cursor:pointer;display:flex;align-items:center;justify-content:center;margin:0 auto 30px;transition:transform .3s,box-shadow .3s,background .3s;box-shadow:0 4px 24px rgba(236,64,122,.15)}
+.voice-play:hover{transform:scale(1.08);box-shadow:0 6px 32px rgba(236,64,122,.25)}
+.voice-play.playing{background:linear-gradient(135deg,var(--s4),var(--s5));border-color:#fff}
+.voice-play.playing svg path{fill:#fff}
+.voice-play svg{width:32px;height:32px}
+.voice-play svg path{fill:var(--s5);transition:fill .3s}
+.voice-lines{min-height:220px;display:flex;flex-direction:column;align-items:center;gap:6px}
+.voice-lines .vline{font-family:'Lora',serif;font-style:italic;font-size:clamp(15px,2.8vw,19px);color:var(--brown);line-height:1.8;opacity:0;transform:translateY(12px);transition:opacity .6s ease,transform .6s ease,color .3s ease}
+.voice-lines .vline.show{opacity:1;transform:translateY(0)}
+.voice-lines .vline.active{color:var(--s5);font-weight:500}
+.voice-lines .vline.done{opacity:.5}
+.voice-progress{width:100%;max-width:300px;height:3px;background:var(--s2);border-radius:3px;margin:24px auto 0;overflow:hidden;opacity:0;transition:opacity .4s}
+.voice-progress.show{opacity:1}
+.voice-progress-bar{height:100%;background:linear-gradient(90deg,var(--s4),var(--s5));border-radius:3px;width:0%;transition:width .3s linear}
+
 /* ===== RESPONSIVE ===== */
 @media(max-width:768px){
   .center-line{left:22px}.vine-line{left:22px}
@@ -522,6 +541,20 @@ body.site-active a,body.site-active .card img,body.site-active .lb-x,body.site-a
     </div>
     <p class="days" style="margin-top:16px;opacity:0" id="counterLabel">of loving you and counting</p>
   </div>
+</section>
+
+<!-- ===== VOICE MESSAGE ===== -->
+<section class="voice-section">
+  <div class="voice-box">
+    <div id="voiceFlower"></div>
+    <h3>A message from me to you</h3>
+    <button class="voice-play" id="voicePlay">
+      <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="#ec407a"/></svg>
+    </button>
+    <div class="voice-lines" id="voiceLines"></div>
+    <div class="voice-progress" id="voiceProgress"><div class="voice-progress-bar" id="voiceBar"></div></div>
+  </div>
+  <audio id="voiceAudio" src="voice-message.m4a" preload="auto"></audio>
 </section>
 
 <script>
@@ -1170,6 +1203,98 @@ function startConfetti() {
   }
   animate();
 }
+
+// ========== VOICE MESSAGE ==========
+(function() {
+  var audio = document.getElementById('voiceAudio');
+  var btn = document.getElementById('voicePlay');
+  var linesEl = document.getElementById('voiceLines');
+  var progress = document.getElementById('voiceProgress');
+  var bar = document.getElementById('voiceBar');
+
+  // Voice flower
+  document.getElementById('voiceFlower').innerHTML = sakuraSVG(36) + ' ' + sakuraSVG(28, '#ffcdd2', '#f48fb1') + ' ' + sakuraSVG(36);
+
+  // Lines with timing (seconds when each line starts being spoken)
+  var lines = [
+    { t: 0.5,  text: 'From garden selfies to Christmas lights,' },
+    { t: 4,    text: 'from ice skating rinks to sunset hikes,' },
+    { t: 7.5,  text: 'from graduation caps to late night fries --' },
+    { t: 11,   text: 'every single moment with you is my favorite.' },
+    { t: 16,   text: '' },
+    { t: 17,   text: 'Like sakura petals in the spring breeze,' },
+    { t: 20.5, text: 'our love keeps blooming, soft and free.' },
+    { t: 24,   text: '' },
+    { t: 25,   text: "Here's to all the chapters we've written" },
+    { t: 28.5, text: 'and all the ones still to come.' },
+  ];
+
+  // Build line elements
+  lines.forEach(function(l) {
+    var div = document.createElement('div');
+    div.className = 'vline';
+    if (l.text === '') {
+      div.innerHTML = '&nbsp;';
+      div.style.height = '8px';
+    } else {
+      div.textContent = l.text;
+    }
+    linesEl.appendChild(div);
+  });
+
+  var vlines = linesEl.querySelectorAll('.vline');
+  var playing = false;
+  var pauseSvg = '<svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" fill="#ec407a"/></svg>';
+  var playSvg = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="#ec407a"/></svg>';
+
+  btn.addEventListener('click', function() {
+    if (!playing) {
+      playing = true;
+      audio.play();
+      btn.innerHTML = pauseSvg;
+      btn.classList.add('playing');
+      progress.classList.add('show');
+    } else {
+      playing = false;
+      audio.pause();
+      btn.innerHTML = playSvg;
+      btn.classList.remove('playing');
+    }
+  });
+
+  audio.addEventListener('timeupdate', function() {
+    var ct = audio.currentTime;
+    var dur = audio.duration || 33;
+    bar.style.width = (ct / dur * 100) + '%';
+
+    // Show lines as audio progresses
+    for (var i = 0; i < lines.length; i++) {
+      if (ct >= lines[i].t) {
+        vlines[i].classList.add('show');
+        // Mark active line
+        vlines[i].classList.remove('done');
+        vlines[i].classList.add('active');
+        // Previous lines become "done"
+        if (i > 0) {
+          vlines[i-1].classList.remove('active');
+          vlines[i-1].classList.add('done');
+        }
+      }
+    }
+  });
+
+  audio.addEventListener('ended', function() {
+    playing = false;
+    btn.innerHTML = playSvg;
+    btn.classList.remove('playing');
+    // All lines stay visible, remove active/done styling
+    vlines.forEach(function(v) {
+      v.classList.remove('active');
+      v.classList.remove('done');
+      v.classList.add('show');
+    });
+  });
+})();
 </script>
 </body>
 </html>
