@@ -523,20 +523,7 @@ body.site-active a,body.site-active .card img,body.site-active .lb-x,body.site-a
   <div class="reasons-dots" id="reasonsDots"></div>
 </div>
 
-<!-- ===== ENDING ===== -->
-<section class="ending">
-  <div class="end-tree-l" id="endTreeL"></div>
-  <div class="end-tree-r" id="endTreeR"></div>
-  <div class="letter" id="endLetter">
-    <div id="endFlower" style="margin-bottom:8px"></div>
-    <h2>Happy Valentine's Day, Tracy</h2>
-    <p class="ltxt" id="letterText"></p>
-    <div id="endCats" style="margin:20px 0 8px;display:flex;justify-content:center"></div>
-    <p class="sig" id="sigText" style="opacity:0">Forever yours, Gabriel</p>
-  </div>
-</section>
-
-<!-- ===== VOICE MESSAGE ===== -->
+<!-- ===== VOICE MESSAGE (finale) ===== -->
 <section class="voice-section">
   <div class="voice-box">
     <div id="voiceFlower"></div>
@@ -764,9 +751,7 @@ cdivs.forEach(function(cd, i) {
   if (el) el.innerHTML = catPairSVG(90);
 });
 
-// Ending flower + cats
-document.getElementById('endFlower').innerHTML = sakuraSVG(50, '#f8bbd0', '#ec407a');
-document.getElementById('endCats').innerHTML = sakuraSVG(24) + ' ' + catPairSVG(120) + ' ' + sakuraSVG(24);
+// (ending letter removed - voice message is now the finale)
 
 // Month pills - add sakura to each
 document.querySelectorAll('.month .pill').forEach(function(pill) {
@@ -778,9 +763,7 @@ document.querySelectorAll('.month .pill').forEach(function(pill) {
 // Hero - big trees on left and right
 document.getElementById('heroTreeL').innerHTML = sakuraTreeSVG(280, 470);
 document.getElementById('heroTreeR').innerHTML = sakuraTreeSVG(280, 470);
-// Ending - trees
-document.getElementById('endTreeL').innerHTML = sakuraTreeSVG(240, 400);
-document.getElementById('endTreeR').innerHTML = sakuraTreeSVG(240, 400);
+// (ending trees removed - voice section is finale)
 
 // Timeline - place sakura branch decorations along the sides at intervals
 (function() {
@@ -984,55 +967,6 @@ window.addEventListener('scroll', function() {
 function olb(img) { document.getElementById('lbi').src = img.src; document.getElementById('lb').classList.add('on'); document.body.style.overflow='hidden'; }
 function clb() { document.getElementById('lb').classList.remove('on'); document.body.style.overflow=''; }
 document.addEventListener('keydown', function(e) { if (e.key === 'Escape') clb(); });
-
-// ========== TYPEWRITER EFFECT ON LOVE LETTER ==========
-(function() {
-  var letterLines = [
-    'From garden selfies to Christmas lights,',
-    'from ice skating rinks to sunset hikes,',
-    'from graduation caps to late night fries --',
-    'every single moment with you is my favorite.',
-    '',
-    'Like sakura petals in the spring breeze,',
-    'our love keeps blooming, soft and free.',
-    '',
-    "Here's to all the chapters we've written",
-    'and all the ones still to come.'
-  ];
-  var container = document.getElementById('letterText');
-  var html = '';
-  letterLines.forEach(function(line, li) {
-    if (line === '') { html += '<br>'; return; }
-    for (var i = 0; i < line.length; i++) {
-      html += '<span class="tw-char">' + (line[i] === ' ' ? '&nbsp;' : line[i]) + '</span>';
-    }
-    if (li < letterLines.length - 1) html += '<br>';
-  });
-  container.innerHTML = html;
-
-  var chars = container.querySelectorAll('.tw-char');
-  var typed = false;
-
-  var twObs = new IntersectionObserver(function(entries) {
-    entries.forEach(function(e) {
-      if (e.isIntersecting && !typed) {
-        typed = true;
-        var delay = 0;
-        chars.forEach(function(ch, i) {
-          setTimeout(function() { ch.classList.add('show'); }, delay);
-          delay += 30;
-        });
-        // After typewriter finishes, show signature + confetti
-        setTimeout(function() {
-          document.getElementById('sigText').style.transition = 'opacity .8s ease';
-          document.getElementById('sigText').style.opacity = '1';
-          startConfetti();
-        }, delay + 200);
-      }
-    });
-  }, { threshold: .2 });
-  twObs.observe(document.getElementById('endLetter'));
-})();
 
 // ========== LIVE DAY/HOUR/MIN/SEC COUNTER ==========
 (function() {
