@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gabriel & Tracy</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;1,400&family=Dancing+Script:wght@400;600;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --s1:#fef6f9;--s2:#fce4ec;--s3:#f8bbd0;--s4:#f48fb1;--s5:#ec407a;--s6:#d4456a;
+  --branch:#8d6e63;--cream:#fffaf7;--brown:#5d4037;--gold:#d4a574;
+}
+html{scroll-behavior:smooth}
+body{background:var(--cream);font-family:'Lora',serif;color:var(--brown);overflow-x:hidden}
+
+/* ===== SAKURA PETAL (CSS shape) ===== */
+.petal-fall{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9990;overflow:hidden}
+.petal-fall2{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:3;overflow:hidden}
+.petal{position:absolute;top:-30px;border-radius:150% 0 150% 0;opacity:0}
+.petal.a{animation:pf1 linear infinite}
+.petal.b{animation:pf2 linear infinite}
+.petal.c{animation:pf3 linear infinite}
+.petal.d{animation:pf4 linear infinite}
+.petal.e{animation:pf5 ease-in-out infinite}
+.petal.f{animation:pf6 ease-in-out infinite}
+@keyframes pf1{
+  0%{transform:translateY(-5vh) translateX(0) rotate(0deg) scale(.8);opacity:0}
+  5%{opacity:.75}50%{transform:translateY(50vh) translateX(90px) rotate(180deg) scale(1);opacity:.6}
+  80%{opacity:.35}100%{transform:translateY(110vh) translateX(-40px) rotate(360deg) scale(.5);opacity:0}
+}
+@keyframes pf2{
+  0%{transform:translateY(-5vh) translateX(0) rotate(30deg) scale(.9);opacity:0}
+  5%{opacity:.65}50%{transform:translateY(50vh) translateX(-80px) rotate(210deg) scale(1.1);opacity:.55}
+  80%{opacity:.3}100%{transform:translateY(110vh) translateX(50px) rotate(390deg) scale(.4);opacity:0}
+}
+@keyframes pf3{
+  0%{transform:translateY(-5vh) translateX(0) rotate(45deg) scale(1);opacity:0}
+  8%{opacity:.7}30%{transform:translateY(30vh) translateX(120px) rotate(160deg) scale(1.1);opacity:.6}
+  60%{transform:translateY(65vh) translateX(-60px) rotate(280deg) scale(.9);opacity:.4}
+  100%{transform:translateY(112vh) translateX(30px) rotate(420deg) scale(.3);opacity:0}
+}
+@keyframes pf4{
+  0%{transform:translateY(-5vh) translateX(0) rotate(-20deg) scale(.7);opacity:0}
+  6%{opacity:.8}40%{transform:translateY(40vh) translateX(-130px) rotate(140deg) scale(1.2);opacity:.55}
+  70%{transform:translateY(75vh) translateX(70px) rotate(300deg) scale(.8);opacity:.3}
+  100%{transform:translateY(112vh) translateX(-20px) rotate(400deg) scale(.35);opacity:0}
+}
+@keyframes pf5{
+  0%{transform:translateY(-5vh) translateX(0) rotate(10deg) scale(.85);opacity:0}
+  5%{opacity:.7}25%{transform:translateY(25vh) translateX(60px) rotate(100deg) scale(1.05);opacity:.65}
+  50%{transform:translateY(52vh) translateX(-50px) rotate(190deg) scale(1);opacity:.5}
+  75%{transform:translateY(78vh) translateX(80px) rotate(290deg) scale(.7);opacity:.3}
+  100%{transform:translateY(112vh) translateX(-30px) rotate(380deg) scale(.4);opacity:0}
+}
+@keyframes pf6{
+  0%{transform:translateY(-5vh) translateX(0) rotate(-40deg) scale(1.1);opacity:0}
+  7%{opacity:.65}35%{transform:translateY(35vh) translateX(-100px) rotate(90deg) scale(1);opacity:.6}
+  65%{transform:translateY(68vh) translateX(110px) rotate(250deg) scale(.85);opacity:.35}
+  100%{transform:translateY(112vh) translateX(-50px) rotate(370deg) scale(.3);opacity:0}
+}
+
+/* ===== INLINE SVG SAKURA FLOWER ===== */
+.sakura{display:inline-block;vertical-align:middle}
+.sakura svg{display:block}
+
+/* ===== SCATTERED SAKURA LAYER ===== */
+.sakura-scatter{position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;overflow:hidden;z-index:0}
+.sakura-scatter .sf{position:absolute;opacity:.12}
+
+/* ===== CAT PAIR SVG ===== */
+.cat-pair{display:inline-block;vertical-align:middle}
+.cat-pair svg{display:block}
+
+/* ===== PROGRESS BAR ===== */
+.progress-bar{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--s3),var(--s5),var(--s4));z-index:9998;border-radius:0 2px 2px 0;transition:width .1s linear}
+
+/* ===== HERO ===== */
+.hero{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:50px 20px;background:linear-gradient(180deg,var(--s2) 0%,var(--s1) 50%,var(--cream) 100%);z-index:1;overflow:hidden}
+.hero-deco{position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none}
+.hero-cats{margin-bottom:16px;position:relative;z-index:2;animation:catBob 3s ease-in-out infinite}
+@keyframes catBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.hero-flower{margin-bottom:20px;position:relative;z-index:2;animation:flowerSpin 8s linear infinite}
+@keyframes flowerSpin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.hero h1{font-family:'Dancing Script',cursive;font-size:clamp(44px,9vw,82px);font-weight:700;color:var(--s5);line-height:1.1;position:relative;z-index:2;opacity:0;animation:fadeUp 1s ease forwards .3s}
+.hero h1 span{font-family:'Playfair Display',serif;font-style:italic;font-weight:400;font-size:.45em;color:var(--s4);display:block;margin:-2px 0}
+.hero .sub{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(15px,2.8vw,20px);color:var(--s6);margin-top:14px;position:relative;z-index:2;opacity:0;animation:fadeUp 1s ease forwards .7s}
+.hero .since{font-size:13px;letter-spacing:3px;text-transform:uppercase;color:var(--branch);margin-top:20px;position:relative;z-index:2;opacity:0;animation:fadeUp 1s ease forwards 1s;display:flex;align-items:center;gap:10px;justify-content:center}
+.hero .scroll-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;opacity:0;animation:fadeUp 1s ease forwards 1.6s;z-index:2}
+.hero .scroll-hint span{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--s6)}
+.scroll-arrow{width:18px;height:18px;border-right:2px solid var(--s4);border-bottom:2px solid var(--s4);transform:rotate(45deg);animation:bounce 2s ease infinite}
+@keyframes bounce{0%,100%{transform:rotate(45deg) translateY(0)}50%{transform:rotate(45deg) translateY(5px)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:translateY(0)}}
+
+/* ===== TIMELINE ===== */
+.timeline{position:relative;max-width:1300px;margin:0 auto;padding:50px 16px 80px;z-index:1}
+
+/* Curvy vine line via SVG */
+.vine-line{position:absolute;left:50%;top:0;bottom:0;transform:translateX(-50%);width:60px;z-index:0;overflow:visible}
+.vine-line svg{position:absolute;top:0;left:50%;transform:translateX(-50%);width:60px}
+
+/* Straight fallback line behind the vine */
+.center-line{position:absolute;left:50%;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--s3),var(--branch) 20%,var(--branch) 80%,var(--s3));transform:translateX(-50%);z-index:0}
+
+/* ===== MONTH MARKER ===== */
+.month{position:relative;z-index:2;text-align:center;margin:60px 0 30px;clear:both}
+.month .pill{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,var(--s5),var(--s4));color:#fff;font-family:'Playfair Display',serif;font-size:13px;font-weight:600;letter-spacing:2px;padding:12px 28px;border-radius:28px;box-shadow:0 4px 20px rgba(236,64,122,.22)}
+.month .pill .note{display:block;font-family:'Dancing Script',cursive;font-size:18px;font-weight:400;letter-spacing:0;margin-top:2px;opacity:.9}
+
+/* ===== TIMELINE ENTRY ===== */
+.tl{position:relative;z-index:2;margin-bottom:36px;display:flex;align-items:flex-start;opacity:0;transform:translateY(35px);transition:opacity .7s ease,transform .7s ease}
+.tl.vis{opacity:1;transform:translateY(0)}
+.tl.L{flex-direction:row;padding-right:calc(50% + 32px)}
+.tl.R{flex-direction:row-reverse;padding-left:calc(50% + 32px)}
+.tl-dot{position:absolute;left:50%;top:24px;transform:translateX(-50%);z-index:3;filter:drop-shadow(0 1px 3px rgba(236,64,122,.25))}
+.card{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 6px 24px rgba(141,110,99,.08);transition:transform .35s ease,box-shadow .35s ease;width:100%}
+.card:hover{transform:translateY(-3px) rotate(.3deg);box-shadow:0 12px 36px rgba(236,64,122,.12)}
+.card img{width:100%;display:block;object-fit:cover;max-height:380px;cursor:pointer}
+.card .cap{padding:12px 16px;background:linear-gradient(135deg,#fff,var(--s1));position:relative}
+.card .cap .dt{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--branch);margin-bottom:3px}
+.card .cap .nt{font-family:'Dancing Script',cursive;font-size:16px;color:var(--s6)}
+/* tiny paw in corner (CSS only) */
+.card .cap::after{content:'';position:absolute;right:14px;bottom:12px;width:12px;height:12px;background:radial-gradient(circle at 50% 65%,var(--s3) 35%,transparent 35%),radial-gradient(circle at 28% 28%,var(--s3) 22%,transparent 22%),radial-gradient(circle at 72% 28%,var(--s3) 22%,transparent 22%),radial-gradient(circle at 20% 55%,var(--s3) 18%,transparent 18%),radial-gradient(circle at 80% 55%,var(--s3) 18%,transparent 18%);opacity:.35}
+
+/* ===== GRID ===== */
+.grid{position:relative;z-index:2;max-width:860px;margin:20px auto 36px;display:grid;gap:10px;opacity:0;transform:translateY(35px);transition:opacity .7s ease,transform .7s ease}
+.grid.vis{opacity:1;transform:translateY(0)}
+.grid.c2{grid-template-columns:1fr 1fr}.grid.c3{grid-template-columns:1fr 1fr 1fr}
+.grid img{width:100%;border-radius:10px;object-fit:cover;aspect-ratio:1;box-shadow:0 3px 12px rgba(141,110,99,.08);transition:transform .3s,box-shadow .3s;cursor:pointer;border:2px solid transparent}
+.grid img:hover{transform:scale(1.03);box-shadow:0 6px 20px rgba(236,64,122,.12);border-color:var(--s3)}
+
+/* ===== CAT DIVIDER ===== */
+.cdiv{position:relative;z-index:2;text-align:center;margin:24px 0;opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+.cdiv.vis{opacity:1;transform:translateY(0)}
+.cdiv .scene{display:inline-flex;align-items:flex-end;gap:8px;background:linear-gradient(135deg,var(--s1),#fff);padding:14px 24px 10px;border-radius:18px;box-shadow:0 3px 14px rgba(236,64,122,.06)}
+.cdiv .txt{font-family:'Dancing Script',cursive;font-size:15px;color:var(--s6);display:block;margin-top:6px}
+
+/* ===== MILESTONE ===== */
+.mile{position:relative;z-index:2;text-align:center;margin:60px auto;max-width:560px;padding:36px;background:linear-gradient(135deg,#fff,var(--s1));border-radius:22px;box-shadow:0 6px 32px rgba(236,64,122,.1);border:2px solid var(--s3);opacity:0;transform:translateY(35px);transition:opacity .7s ease,transform .7s ease}
+.mile.vis{opacity:1;transform:translateY(0)}
+.mile h3{font-family:'Dancing Script',cursive;font-size:30px;color:var(--s5);margin:8px 0}
+.mile p{font-family:'Lora',serif;font-style:italic;font-size:14px;color:var(--s6);line-height:1.6}
+
+/* ===== ENDING ===== */
+.ending{position:relative;z-index:1;text-align:center;padding:80px 20px 100px;background:linear-gradient(180deg,var(--cream) 0%,var(--s2) 40%,var(--s3) 100%);overflow:hidden}
+.letter{max-width:520px;margin:0 auto;padding:44px 36px;background:#fff;border-radius:22px;box-shadow:0 10px 50px rgba(236,64,122,.16);position:relative;opacity:0;transform:translateY(35px);transition:opacity .7s ease,transform .7s ease}
+.letter.vis{opacity:1;transform:translateY(0)}
+.letter::before{content:'';position:absolute;top:-2px;left:-2px;right:-2px;bottom:-2px;border-radius:24px;background:linear-gradient(135deg,var(--s4),var(--s3),var(--s5));z-index:-1}
+.letter h2{font-family:'Dancing Script',cursive;font-size:clamp(28px,5.5vw,44px);color:var(--s5);margin:12px 0}
+.letter .ltxt{font-family:'Lora',serif;font-style:italic;font-size:15px;color:var(--brown);line-height:1.8;margin-top:14px}
+.letter .sig{font-family:'Dancing Script',cursive;font-size:26px;color:var(--s5);margin-top:20px}
+.letter .days{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--branch);margin-top:16px}
+
+/* ===== LIGHTBOX ===== */
+.lb{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(30,10,15,.92);z-index:9999;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(8px)}
+.lb.on{display:flex}
+.lb img{max-width:90vw;max-height:90vh;border-radius:10px;box-shadow:0 16px 60px rgba(0,0,0,.5);object-fit:contain}
+.lb-x{position:absolute;top:18px;right:22px;font-size:30px;color:#fff;cursor:pointer;opacity:.7;transition:opacity .3s;font-family:'Lora',serif}
+.lb-x:hover{opacity:1}
+
+/* ===== SAKURA TREES ===== */
+.sakura-tree{position:absolute;pointer-events:none;z-index:0}
+.sakura-tree svg{display:block}
+/* hero trees */
+.hero-tree-l{position:absolute;left:-40px;bottom:0;z-index:0;pointer-events:none;opacity:.85}
+.hero-tree-r{position:absolute;right:-40px;bottom:0;z-index:0;pointer-events:none;opacity:.85;transform:scaleX(-1)}
+/* timeline side trees */
+.tl-tree{position:absolute;pointer-events:none;z-index:0;opacity:.18}
+.tl-tree.left{left:-60px}.tl-tree.right{right:-60px;transform:scaleX(-1)}
+/* ending trees */
+.end-tree-l{position:absolute;left:-20px;bottom:0;z-index:0;pointer-events:none;opacity:.7}
+.end-tree-r{position:absolute;right:-20px;bottom:0;z-index:0;pointer-events:none;opacity:.7;transform:scaleX(-1)}
+/* small branch decorations */
+.sakura-branch-deco{text-align:center;pointer-events:none;margin:16px 0;position:relative;z-index:1}
+
+/* ===== ENVELOPE OPENING ===== */
+.envelope-overlay{position:fixed;top:0;left:0;width:100%;height:100%;z-index:99999;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--s2),var(--s1),var(--cream));transition:opacity 1.2s ease,visibility 1.2s ease}
+.envelope-overlay.gone{opacity:0;visibility:hidden;pointer-events:none}
+.envelope-wrap{text-align:center;cursor:pointer}
+.envelope-wrap .hint{font-family:'Dancing Script',cursive;font-size:clamp(16px,3vw,22px);color:var(--s5);margin-top:24px;opacity:0;animation:fadeUp 1s ease forwards 1s}
+.envelope{position:relative;width:clamp(260px,60vw,380px);height:clamp(180px,40vw,260px);margin:0 auto}
+.env-body{position:absolute;bottom:0;width:100%;height:70%;background:linear-gradient(180deg,#fff,var(--s1));border-radius:0 0 12px 12px;box-shadow:0 8px 40px rgba(236,64,122,.15);z-index:2}
+.env-flap{position:absolute;top:0;left:0;width:100%;height:55%;background:linear-gradient(180deg,var(--s3),var(--s2));clip-path:polygon(0 0,50% 100%,100% 0);z-index:3;transform-origin:top center;transition:transform .8s cubic-bezier(.4,0,.2,1)}
+.env-flap-back{position:absolute;top:0;left:0;width:100%;height:55%;background:var(--s2);clip-path:polygon(0 0,50% 100%,100% 0);z-index:1}
+.env-letter{position:absolute;top:15%;left:10%;width:80%;height:60%;background:#fff;border-radius:6px;z-index:2;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:20px;box-shadow:0 2px 12px rgba(236,64,122,.08);transition:transform .8s cubic-bezier(.4,0,.2,1) .3s}
+.env-letter .el-to{font-family:'Dancing Script',cursive;font-size:clamp(22px,4vw,34px);color:var(--s5)}
+.env-letter .el-heart{margin-top:8px}
+.envelope.open .env-flap{transform:rotateX(180deg)}
+.envelope.open .env-letter{transform:translateY(-80%) scale(1.05)}
+.env-seal{position:absolute;top:calc(55% - 22px);left:50%;transform:translateX(-50%);width:44px;height:44px;background:var(--s5);border-radius:50%;z-index:4;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(236,64,122,.3);transition:opacity .4s ease}
+.envelope.open .env-seal{opacity:0}
+
+/* ===== HEART CURSOR ===== */
+body.site-active{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' fill='%23ec407a'/%3E%3C/svg%3E") 12 12, auto}
+body.site-active a,body.site-active .card img,body.site-active .lb-x,body.site-active .envelope-wrap{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 24 24'%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' fill='%23f48fb1'/%3E%3C/svg%3E") 14 14, pointer}
+
+/* ===== TYPEWRITER ===== */
+.ltxt .tw-char{opacity:0;display:inline;transition:opacity .04s ease}
+.ltxt .tw-char.show{opacity:1}
+
+/* ===== LIVE COUNTER ===== */
+.live-counter{display:flex;gap:clamp(10px,3vw,24px);justify-content:center;flex-wrap:wrap;margin-top:20px}
+.counter-box{text-align:center;background:linear-gradient(135deg,#fff,var(--s1));padding:12px 16px;border-radius:14px;min-width:70px;box-shadow:0 3px 16px rgba(236,64,122,.08);border:1px solid var(--s3)}
+.counter-box .num{font-family:'Dancing Script',cursive;font-size:clamp(28px,5vw,42px);font-weight:700;color:var(--s5);line-height:1;display:block}
+.counter-box .lbl{font-family:'Lora',serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--branch);margin-top:4px;display:block}
+
+/* ===== REASONS CAROUSEL ===== */
+.reasons{position:relative;z-index:2;max-width:500px;margin:50px auto;text-align:center;opacity:0;transform:translateY(35px);transition:opacity .7s ease,transform .7s ease}
+.reasons.vis{opacity:1;transform:translateY(0)}
+.reasons h3{font-family:'Dancing Script',cursive;font-size:28px;color:var(--s5);margin-bottom:16px}
+.reasons-card{position:relative;background:linear-gradient(135deg,#fff,var(--s1));border-radius:18px;padding:30px 28px;min-height:100px;box-shadow:0 6px 30px rgba(236,64,122,.1);border:2px solid var(--s3);overflow:hidden;display:flex;align-items:center;justify-content:center}
+.reasons-card .reason-text{font-family:'Lora',serif;font-style:italic;font-size:clamp(15px,2.5vw,18px);color:var(--brown);line-height:1.7;transition:opacity .5s ease,transform .5s ease}
+.reasons-card .reason-text.fade-out{opacity:0;transform:translateY(-10px)}
+.reasons-card .reason-text.fade-in{opacity:0;transform:translateY(10px)}
+.reasons-dots{display:flex;gap:8px;justify-content:center;margin-top:14px}
+.reasons-dots span{width:8px;height:8px;border-radius:50%;background:var(--s3);transition:background .3s,transform .3s}
+.reasons-dots span.active{background:var(--s5);transform:scale(1.3)}
+
+/* ===== MUSIC BUTTON ===== */
+.music-btn{position:fixed;bottom:24px;right:24px;z-index:9995;width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,var(--s5),var(--s4));border:none;box-shadow:0 4px 20px rgba(236,64,122,.3);cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 24 24'%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' fill='%23f48fb1'/%3E%3C/svg%3E") 14 14, pointer;display:flex;align-items:center;justify-content:center;transition:transform .3s,box-shadow .3s}
+.music-btn:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(236,64,122,.4)}
+.music-btn svg{width:22px;height:22px;fill:#fff}
+.music-btn .bars{display:flex;align-items:flex-end;gap:3px;height:18px}
+.music-btn .bars span{display:block;width:3px;background:#fff;border-radius:2px;transition:height .3s}
+.music-btn.playing .bars span{animation:musicBar .8s ease-in-out infinite alternate}
+.music-btn .bars span:nth-child(1){height:6px;animation-delay:0s}
+.music-btn .bars span:nth-child(2){height:12px;animation-delay:.15s}
+.music-btn .bars span:nth-child(3){height:8px;animation-delay:.3s}
+.music-btn .bars span:nth-child(4){height:14px;animation-delay:.1s}
+@keyframes musicBar{0%{height:4px}100%{height:18px}}
+
+/* ===== CONFETTI CANVAS ===== */
+.confetti-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9994;opacity:0;transition:opacity .3s}
+.confetti-canvas.active{opacity:1}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){
+  .center-line{left:22px}.vine-line{left:22px}
+  .tl.L,.tl.R{padding-right:0;padding-left:50px;flex-direction:row}
+  .tl-dot{left:22px}
+  .month .pill{font-size:11px;padding:9px 20px}
+  .grid{padding:0 12px}.grid.c3{grid-template-columns:1fr 1fr}
+  .mile{margin:40px 12px;padding:26px 20px}
+  .letter{margin:0 12px;padding:36px 20px}
+  .envelope{width:280px;height:190px}
+  .music-btn{bottom:16px;right:16px;width:44px;height:44px}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== ENVELOPE OPENING ===== -->
+<div class="envelope-overlay" id="envOverlay">
+  <div class="envelope-wrap" id="envWrap">
+    <div class="envelope" id="envelope">
+      <div class="env-flap"></div>
+      <div class="env-flap-back"></div>
+      <div class="env-seal" id="envSeal"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#fff"/></svg></div>
+      <div class="env-letter">
+        <span class="el-to">For Tracy</span>
+        <span class="el-heart" id="envHeart"></span>
+      </div>
+    </div>
+    <p class="hint">tap to open</p>
+  </div>
+</div>
+
+<div class="progress-bar" id="pb"></div>
+<div class="petal-fall" id="pf"></div>
+<div class="petal-fall2" id="pf2"></div>
+<div class="lb" id="lb" onclick="clb()"><span class="lb-x">&times;</span><img id="lbi" src="" alt=""></div>
+
+<!-- ===== MUSIC BUTTON + SPOTIFY ===== -->
+<button class="music-btn" id="musicBtn" title="Play Blue by Yng Kai">
+  <div class="bars"><span></span><span></span><span></span><span></span></div>
+</button>
+<div id="spotifyWrap" style="position:fixed;bottom:82px;right:16px;z-index:9995;opacity:0;transform:translateY(10px) scale(.95);transition:opacity .4s ease,transform .4s ease;pointer-events:none;border-radius:12px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.2)">
+  <iframe id="spotifyPlayer" style="border-radius:12px" src="" width="300" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+</div>
+
+<!-- ===== CONFETTI ===== -->
+<canvas class="confetti-canvas" id="confettiCanvas"></canvas>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="hero-tree-l" id="heroTreeL"></div>
+  <div class="hero-tree-r" id="heroTreeR"></div>
+  <div class="hero-deco" id="heroDeco"></div>
+  <div class="hero-flower" id="heroFlower"></div>
+  <div class="hero-cats" id="heroCats"></div>
+  <h1>Gabriel<span>&</span>Tracy</h1>
+  <p class="sub">A journey through every moment that made us, us</p>
+  <p class="since"><span id="sinceSakuraL"></span> Since November 23, 2024 <span id="sinceSakuraR"></span></p>
+  <div class="scroll-hint"><span>Scroll to begin</span><div class="scroll-arrow"></div></div>
+</section>
+
+<!-- ===== TIMELINE ===== -->
+<div class="timeline" id="timeline">
+  <div class="center-line"></div>
+
+  <!-- BEFORE US -->
+  <div class="month"><div class="pill"><span>BEFORE US<span class="note">where it all started</span></span></div></div>
+
+  <div class="tl L"><div class="tl-dot" id="d0"></div><div class="card"><img src="IMG_7277.jpeg" onclick="olb(this)" loading="lazy"><div class="cap"><div class="dt">September 18, 2024</div><div class="nt">Golden hour together</div></div></div></div>
+  <div class="tl R"><div class="tl-dot" id="d1"></div><div class="card"><img src="IMG_3609.jpeg" onclick="olb(this)" loading="lazy"><div class="cap"><div class="dt">September 25, 2024</div><div class="nt">Night adventures</div></div></div></div>
+  <div class="tl L"><div class="tl-dot" id="d2"></div><div class="card"><img src="IMG_7906.jpeg" onclick="olb(this)" loading="lazy"><div class="cap"><div class="dt">November 8, 2024</div><div class="nt">Baby's breath and butterflies</div></div></div></div>
+
+  <!-- NOVEMBER 2024 -->
+  <div class="cdiv" id="cd0"></div>
+  <div class="mile"><div id="mf0"></div><h3>November 23, 2024</h3><p>The day everything changed. The day we became us.</p><div id="mc0" style="margin-top:12px"></div></div>
+
+  <div class="tl R"><div class="tl-dot" id="d3"></div><div class="card"><img src="IMG_0555.jpeg" onclick="olb(this)" loading="lazy"><div class="cap"><div class="dt">November 23, 2024</div><div class="nt">Day one -- garden smiles</div></div></div></div>
+  <div class="tl L"><div class="tl-dot" id="d4"></div><div class="card"><img src="IMG_8821.jpeg" onclick="olb(this)" loading="lazy"><div class="cap"><div class="dt">November 24, 2024</div><div class="nt">Cozy nights, warm hearts</div></div></div></div>
+
+  <!-- DECEMBER 2024 -->
+  <div class="month"><div class="pill"><span>DECEMBER 2024<span class="note">our first holiday season</span></span></div></div>
+  <div class="cdiv" id="cd1"></div>
+
+  <div class="tl R"><div class="tl-dot" id="d5"></div><div class="card"><img src="IMG_0687.jpeg" onclick="olb(this)" loading="lazy"><div class="cap"><div class="dt">December 16, 2024</div><div class="nt">Christmas lights in your eyes</div></div></div></div>
+  <div class="grid c2"><img src="IMG_0723.jpeg" onclick="olb(this)" loading="lazy"><img src="IMG_9223.jpeg" onclick="olb(this)" loading="lazy"></div>
+  <div class="tl L"><div class="tl-dot" id="d6"></div><div class="card"><img src="IMG_9482.jpeg" onclick="olb(this)" loading="lazy"><div class="cap"><div class="dt">December 23, 2024</div><div class="nt">Ice skating date</div></div></div></div>
+  <div class="tl R"><div class="tl-dot" id="d7"></div><div class="card"><img src="IMG_1242.jpeg" onclick="olb(this)" loading="lazy"><div class="cap"><div class="dt">December 26, 2024</div><div class="nt">Holiday smiles</div></div></div></div>
+
+  <!-- JANUARY 2025 -->
+  <div class="month"><div class="pill"><span>JANUARY 2025<span class="note">a new year, together</span></span></div></div>
+  <div class="cdiv" id="cd2"></div>
+
+  <div class="tl L"><div class="tl-dot" id="d8"></div><div class="card"><img src="IMG_0078.jpeg" onclick="olb(this)" loading="lazy"><div class="cap"><div class="dt">January 11, 2025</div><div class="nt">Beach day with her art</div></div></div></div>
+  <div class="tl R"><div class="tl-dot" id="d9"></div><div class="card"><img src="IMG_1526.jpeg" onclick="olb(this)" loading="lazy"><div class="cap"><div class="dt">January 25, 2025</div><div class="nt">Two months in</div></div></div></div>
+
+  <!-- FEBRUARY 2025 -->
+  <div class="month"><div class="pill"><span>FEBRUARY 2025<span class="note">our first Valentine's</span></span></div></div>
+  <div class="cdiv" id="cd3"></div>
+
+  <div class="tl L"><div class="tl-dot" id="d10"></div><div class="card"><img src="IMG_0749.jpeg" onclick="olb(this)" loading="lazy"><div class="cap"><div class="dt">February 15, 2025</div><div class="nt">Valentine's photo booth at The Moon</div></div></div></div>
+  <div class="tl R"><div class="tl-dot" id="d11"></div><div class="card"><img src="IMG_0914.jpeg" onclick="olb(this)" loading="lazy"><div class="cap"><div class="dt">February 22, 2025</div><div class="nt">Japanese garden, spring love</div></div></div></div>
+  <div class="tl L"><div class="tl-dot" id="d12"></div><div class="card"><img src="IMG_2141.jpeg" onclick="olb(this)" loading="lazy"><div class="cap"><div class="dt">February 22, 2025</div><div class="nt">Walking through the gardens together</div></div></div></div>
+
+  <!-- MARCH 2025 -->
+  <div class="month"><div class="pill"><span>MARCH 2025<span class="note">spring was made for us</span></span></div></div>
+
+  <div class="tl R"><div class="tl-dot" id="d13"></div><div class="card"><img src="IMG_1268.jpeg" onclick="olb(this)" loading="lazy"><div class="cap"><div class="dt">March 19, 2025</div><div class="nt">Dinner date nights</div></div></div></div>
+  <div class="grid c2"><img src="IMG_1398.jpeg" onclick="olb(this)" loading="lazy"><img src="IMG_1411.jpeg" onclick="olb(this)" loading="lazy"></div>
+  <div class="tl L"><div class="tl-dot" id="d14"></div><div class="card"><img src="IMG_1512.jpeg" onclick="olb(this)" loading="lazy"><div class="cap"><div class="dt">March 20, 2025</div><div class="nt">Adventures continue</div></div></div></div>
+  <div class="grid c2"><img src="IMG_8279.jpeg" onclick="olb(this)" loading="lazy"><img src="IMG_2795.jpeg" onclick="olb(this)" loading="lazy"></div>
+
+  <!-- APRIL 2025 -->
+  <div class="month"><div class="pill"><span>APRIL 2025<span class="note">blooming like the sakura</span></span></div></div>
+  <div class="cdiv" id="cd4"></div>
+
+  <div class="tl R"><div class="tl-dot" id="d15"></div><div class="card"><img src="IMG_3081.jpeg" onclick="olb(this)" loading="lazy"><div class="cap"><div class="dt">April 15, 2025</div><div class="nt">Outdoor restaurant glow</div></div></div></div>
+  <div class="grid c3"><img src="IMG_3846.jpeg" onclick="olb(this)" loading="lazy"><img src="IMG_3849.jpeg" onclick="olb(this)" loading="lazy"><img src="IMG_3855.jpeg" onclick="olb(this)" loading="lazy"></div>
+  <div class="tl L"><div class="tl-dot" id="d16"></div><div class="card"><img src="lp_image (1).jpeg" onclick="olb(this)" loading="lazy"><div class="cap"><div class="dt">April 30, 2025</div><div class="nt">Sleepy burrito Tracy</div></div></div></div>
+
+  <!-- MAY 2025 -->
+  <div class="month"><div class="pill"><span>MAY 2025<span class="note">falling deeper every day</span></span></div></div>
+  <div class="cdiv" id="cd5"></div>
+
+  <div class="tl R"><div class="tl-dot" id="d17"></div><div class="card"><img src="IMG_1187.jpeg" onclick="olb(this)" loading="lazy"><div class="cap"><div class="dt">May 3, 2025</div><div class="nt">Six months of us</div></div></div></div>
+  <div class="grid c2"><img src="IMG_1365.jpeg" onclick="olb(this)" loading="lazy"><img src="IMG_4078.jpeg" onclick="olb(this)" loading="lazy"></div>
+  <div class="tl L"><div class="tl-dot" id="d18"></div><div class="card"><img src="IMG_1501.jpeg" onclick="olb(this)" loading="lazy"><div class="cap"><div class="dt">May 11, 2025</div><div class="nt">Sunny days with you</div></div></div></div>
+  <div class="tl R"><div class="tl-dot" id="d19"></div><div class="card"><img src="IMG_4226.jpeg" onclick="olb(this)" loading="lazy"><div class="cap"><div class="dt">May 15, 2025</div><div class="nt">Those eyes</div></div></div></div>
+  <div class="tl L"><div class="tl-dot" id="d20"></div><div class="card"><img src="IMG_4336.jpeg" onclick="olb(this)" loading="lazy"><div class="cap"><div class="dt">May 21, 2025</div><div class="nt">Every moment matters</div></div></div></div>
+  <div class="grid c2"><img src="IMG_2312.jpeg" onclick="olb(this)" loading="lazy"><img src="IMG_2313.jpeg" onclick="olb(this)" loading="lazy"></div>
+  <div class="tl R"><div class="tl-dot" id="d21"></div><div class="card"><img src="IMG_4463.jpeg" onclick="olb(this)" loading="lazy"><div class="cap"><div class="dt">May 25, 2025</div><div class="nt">Garden kisses</div></div></div></div>
+  <div class="grid c3"><img src="IMG_2454.jpeg" onclick="olb(this)" loading="lazy"><img src="IMG_2535.jpeg" onclick="olb(this)" loading="lazy"><img src="IMG_4573.jpeg" onclick="olb(this)" loading="lazy"></div>
+  <div class="grid c2"><img src="IMG_2673.jpeg" onclick="olb(this)" loading="lazy"><img src="IMG_2786.jpeg" onclick="olb(this)" loading="lazy"></div>
+  <div class="tl L"><div class="tl-dot" id="d22"></div><div class="card"><img src="IMG_4638.jpeg" onclick="olb(this)" loading="lazy"><div class="cap"><div class="dt">May 31, 2025</div><div class="nt">Late night In-N-Out runs</div></div></div></div>
+
+  <!-- JUNE 2025 -->
+  <div class="month"><div class="pill"><span>JUNE 2025<span class="note">summer love</span></span></div></div>
+  <div class="cdiv" id="cd6"></div>
+
+  <div class="tl R"><div class="tl-dot" id="d23"></div><div class="card"><img src="C1338CE3-B59E-44B3-BB3F-B4DA94070B73.jpeg" onclick="olb(this)" loading="lazy"><div class="cap"><div class="dt">June 4, 2025</div><div class="nt">Sunset laughter</div></div></div></div>
+  <div class="grid c2"><img src="IMG_4736.jpeg" onclick="olb(this)" loading="lazy"><img src="IMG_4795.jpeg" onclick="olb(this)" loading="lazy"></div>
+  <div class="grid c2"><img src="IMG_3961.jpeg" onclick="olb(this)" loading="lazy"><img src="P1060295.jpeg" onclick="olb(this)" loading="lazy"></div>
+
+  <div class="mile"><div id="mf1"></div><h3>Graduation Day!</h3><p>UC Irvine and UC San Diego -- we made it, side by side.</p><div id="mc1" style="margin-top:12px"></div></div>
+
+  <div class="tl L"><div class="tl-dot" id="d24"></div><div class="card"><img src="IMG_9595_Original.jpeg" onclick="olb(this)" loading="lazy"><div class="cap"><div class="dt">June 13, 2025</div><div class="nt">Graduation at Geisel Library</div></div></div></div>
+  <div class="tl R"><div class="tl-dot" id="d25"></div><div class="card"><img src="IMG_4074.jpeg" onclick="olb(this)" loading="lazy"><div class="cap"><div class="dt">June 14, 2025</div><div class="nt">You make everywhere beautiful</div></div></div></div>
+  <div class="grid c3"><img src="IMG_4158.jpeg" onclick="olb(this)" loading="lazy"><img src="IMG_4936.jpeg" onclick="olb(this)" loading="lazy"><img src="IMG_4616.jpeg" onclick="olb(this)" loading="lazy"></div>
+  <div class="grid c2"><img src="IMG_5157.jpeg" onclick="olb(this)" loading="lazy"><img src="IMG_5169.jpeg" onclick="olb(this)" loading="lazy"></div>
+  <div class="tl L"><div class="tl-dot" id="d26"></div><div class="card"><img src="IMG_5302.jpeg" onclick="olb(this)" loading="lazy"><div class="cap"><div class="dt">June 24, 2025</div><div class="nt">Boba and sunshine</div></div></div></div>
+  <div class="grid c2"><img src="IMG_4781.jpeg" onclick="olb(this)" loading="lazy"><img src="IMG_4952.jpeg" onclick="olb(this)" loading="lazy"></div>
+
+  <!-- JULY 2025 -->
+  <div class="month"><div class="pill"><span>JULY 2025<span class="note">warm days, warmer hearts</span></span></div></div>
+  <div class="cdiv" id="cd7"></div>
+
+  <div class="tl R"><div class="tl-dot" id="d27"></div><div class="card"><img src="IMG_5318.jpeg" onclick="olb(this)" loading="lazy"><div class="cap"><div class="dt">July 6, 2025</div><div class="nt">Summer explorations</div></div></div></div>
+  <div class="tl L"><div class="tl-dot" id="d28"></div><div class="card"><img src="IMG_5437.jpeg" onclick="olb(this)" loading="lazy"><div class="cap"><div class="dt">July 10, 2025</div><div class="nt">Always an adventure with you</div></div></div></div>
+  <div class="tl R"><div class="tl-dot" id="d29"></div><div class="card"><img src="lp_image.jpeg" onclick="olb(this)" loading="lazy"><div class="cap"><div class="dt">July 20, 2025</div><div class="nt">Tracy and her tiny cat friends</div></div></div></div>
+  <div class="tl L"><div class="tl-dot" id="d30"></div><div class="card"><img src="IMG_6043.jpeg" onclick="olb(this)" loading="lazy"><div class="cap"><div class="dt">July 31, 2025</div><div class="nt">Eight months strong</div></div></div></div>
+
+  <!-- AUGUST 2025 -->
+  <div class="month"><div class="pill"><span>AUGUST 2025<span class="note">the views with you</span></span></div></div>
+  <div class="cdiv" id="cd8"></div>
+
+  <div class="grid c2"><img src="IMG_6388.jpeg" onclick="olb(this)" loading="lazy"><img src="IMG_6751.jpeg" onclick="olb(this)" loading="lazy"></div>
+  <div class="tl R"><div class="tl-dot" id="d31"></div><div class="card"><img src="IMG_6398.jpeg" onclick="olb(this)" loading="lazy"><div class="cap"><div class="dt">August 8, 2025</div><div class="nt">The Getty, art and us</div></div></div></div>
+  <div class="grid c2"><img src="IMG_6420.jpeg" onclick="olb(this)" loading="lazy"><img src="IMG_6462.jpeg" onclick="olb(this)" loading="lazy"></div>
+
+  <!-- OCTOBER 2025 -->
+  <div class="month"><div class="pill"><span>OCTOBER 2025<span class="note">fall for you, again</span></span></div></div>
+  <div class="cdiv" id="cd9"></div>
+
+  <div class="tl L"><div class="tl-dot" id="d32"></div><div class="card"><img src="IMG_9771.jpeg" onclick="olb(this)" loading="lazy"><div class="cap"><div class="dt">October 18, 2025</div><div class="nt">Strawberry picking at Tanaka Farms</div></div></div></div>
+  <div class="grid c3"><img src="IMG_9775.jpeg" onclick="olb(this)" loading="lazy"><img src="IMG_9783.jpeg" onclick="olb(this)" loading="lazy"><img src="IMG_9849.jpeg" onclick="olb(this)" loading="lazy"></div>
+
+  <!-- NOVEMBER 2025 ANNIVERSARY -->
+  <div class="cdiv" id="cd10"></div>
+  <div class="mile"><div id="mf2"></div><h3>One Year Anniversary!</h3><p>365 days of laughter, love, and growing together.<br>November 23, 2025 -- our love, one year deep.</p><div id="mc2" style="margin-top:12px"></div></div>
+
+  <div class="tl R"><div class="tl-dot" id="d33"></div><div class="card"><img src="IMG_1208.jpeg" onclick="olb(this)" loading="lazy"><div class="cap"><div class="dt">November 23, 2025</div><div class="nt">One whole year of us</div></div></div></div>
+  <div class="tl L"><div class="tl-dot" id="d34"></div><div class="card"><img src="IMG_1252.jpeg" onclick="olb(this)" loading="lazy"><div class="cap"><div class="dt">November 23, 2025</div><div class="nt">Anniversary brunch</div></div></div></div>
+  <div class="grid c3"><img src="IMG_1274.jpeg" onclick="olb(this)" loading="lazy"><img src="IMG_1295.jpeg" onclick="olb(this)" loading="lazy"><img src="IMG_1311.jpeg" onclick="olb(this)" loading="lazy"></div>
+  <div class="tl R"><div class="tl-dot" id="d35"></div><div class="card"><img src="IMG_1490.jpeg" onclick="olb(this)" loading="lazy"><div class="cap"><div class="dt">November 25, 2025</div><div class="nt">Silly faces, real love</div></div></div></div>
+
+  <!-- DECEMBER 2025 -->
+  <div class="month"><div class="pill"><span>DECEMBER 2025<span class="note">second holiday season together</span></span></div></div>
+  <div class="cdiv" id="cd11"></div>
+
+  <div class="tl L"><div class="tl-dot" id="d36"></div><div class="card"><img src="IMG_2710.jpeg" onclick="olb(this)" loading="lazy"><div class="cap"><div class="dt">December 20, 2025</div><div class="nt">Holiday adventures, round two</div></div></div></div>
+  <div class="grid c3"><img src="IMG_2713.jpeg" onclick="olb(this)" loading="lazy"><img src="IMG_2740.jpeg" onclick="olb(this)" loading="lazy"><img src="IMG_2765.jpeg" onclick="olb(this)" loading="lazy"></div>
+  <div class="grid c3"><img src="IMG_8390.jpeg" onclick="olb(this)" loading="lazy"><img src="IMG_2893.jpeg" onclick="olb(this)" loading="lazy"><img src="IMG_2929.jpeg" onclick="olb(this)" loading="lazy"></div>
+  <div class="grid c3"><img src="IMG_2931.jpeg" onclick="olb(this)" loading="lazy"><img src="IMG_2968.jpeg" onclick="olb(this)" loading="lazy"><img src="IMG_2980.jpeg" onclick="olb(this)" loading="lazy"></div>
+  <div class="grid c2"><img src="IMG_2996.jpeg" onclick="olb(this)" loading="lazy"><img src="IMG_3014.jpeg" onclick="olb(this)" loading="lazy"></div>
+  <div class="tl R"><div class="tl-dot" id="d37"></div><div class="card"><img src="IMG_3399.jpeg" onclick="olb(this)" loading="lazy"><div class="cap"><div class="dt">December 29, 2025</div><div class="nt">Almost a new year together</div></div></div></div>
+  <div class="grid c2"><img src="IMG_8758.jpeg" onclick="olb(this)" loading="lazy"><img src="IMG_8793.jpeg" onclick="olb(this)" loading="lazy"></div>
+
+  <!-- JANUARY 2026 -->
+  <div class="month"><div class="pill"><span>JANUARY 2026<span class="note">and still going strong</span></span></div></div>
+  <div class="cdiv" id="cd12"></div>
+
+  <div class="tl L"><div class="tl-dot" id="d38"></div><div class="card"><img src="IMG_9075.jpeg" onclick="olb(this)" loading="lazy"><div class="cap"><div class="dt">January 17, 2026</div><div class="nt">To many more moments like this</div></div></div></div>
+
+  <!-- FEBRUARY 2026 -->
+  <div class="month"><div class="pill"><span>FEBRUARY 2026<span class="note">Valentine's Day</span></span></div></div>
+  <div class="cdiv" id="cd13"></div>
+
+  <div class="tl R"><div class="tl-dot" id="d39"></div><div class="card"><img src="IMG_4925.jpeg" onclick="olb(this)" loading="lazy"><div class="cap"><div class="dt">February 13, 2026</div><div class="nt">Roses for my rose</div></div></div></div>
+
+</div>
+
+<!-- ===== REASONS I LOVE YOU ===== -->
+<div class="reasons" id="reasonsSection">
+  <div id="reasonsFlower" style="margin-bottom:8px"></div>
+  <h3>Reasons I Love You</h3>
+  <div class="reasons-card">
+    <p class="reason-text" id="reasonText"></p>
+  </div>
+  <div class="reasons-dots" id="reasonsDots"></div>
+</div>
+
+<!-- ===== ENDING ===== -->
+<section class="ending">
+  <div class="end-tree-l" id="endTreeL"></div>
+  <div class="end-tree-r" id="endTreeR"></div>
+  <div class="letter" id="endLetter">
+    <div id="endFlower" style="margin-bottom:8px"></div>
+    <h2>Happy Valentine's Day, Tracy</h2>
+    <p class="ltxt" id="letterText"></p>
+    <div id="endCats" style="margin:20px 0 8px;display:flex;justify-content:center"></div>
+    <p class="sig" id="sigText" style="opacity:0">Forever yours, Gabriel</p>
+    <div class="live-counter" id="liveCounter" style="opacity:0">
+      <div class="counter-box"><span class="num" id="cDays">0</span><span class="lbl">Days</span></div>
+      <div class="counter-box"><span class="num" id="cHours">0</span><span class="lbl">Hours</span></div>
+      <div class="counter-box"><span class="num" id="cMins">0</span><span class="lbl">Minutes</span></div>
+      <div class="counter-box"><span class="num" id="cSecs">0</span><span class="lbl">Seconds</span></div>
+    </div>
+    <p class="days" style="margin-top:16px;opacity:0" id="counterLabel">of loving you and counting</p>
+  </div>
+</section>
+
+<script>
+// ========== SAKURA TREE SVG ==========
+function sakuraTreeSVG(w, h, branchColor, petalColor, centerColor) {
+  branchColor = branchColor || '#6d4c41';
+  petalColor = petalColor || '#f8bbd0';
+  centerColor = centerColor || '#ec407a';
+  var pc2 = '#ffc1d4', pc3 = '#ffcdd2', pc4 = '#f48fb1';
+  // Build a sakura tree with trunk, branches, and flower clusters
+  function blossom(cx, cy, r) {
+    var s = '';
+    for (var a = 0; a < 360; a += 72) {
+      var rad = a * Math.PI / 180;
+      var px = cx + Math.cos(rad) * r * 0.55;
+      var py = cy + Math.sin(rad) * r * 0.55;
+      var colors = [petalColor, pc2, pc3];
+      s += '<ellipse cx="'+px+'" cy="'+py+'" rx="'+(r*0.45)+'" ry="'+(r*0.7)+'" fill="'+colors[a%3]+'" opacity=".8" transform="rotate('+a+','+px+','+py+')"/>';
+    }
+    s += '<circle cx="'+cx+'" cy="'+cy+'" r="'+(r*0.25)+'" fill="'+centerColor+'" opacity=".7"/>';
+    return s;
+  }
+  return '<svg viewBox="0 0 300 500" width="'+w+'" height="'+h+'" xmlns="http://www.w3.org/2000/svg">' +
+    // Trunk
+    '<path d="M150,500 Q145,420 140,360 Q135,300 125,260 Q118,230 130,200 Q138,175 135,150" fill="none" stroke="'+branchColor+'" stroke-width="14" stroke-linecap="round"/>' +
+    // Main branches
+    '<path d="M135,260 Q100,230 70,210 Q45,195 30,175" fill="none" stroke="'+branchColor+'" stroke-width="8" stroke-linecap="round"/>' +
+    '<path d="M130,220 Q160,190 190,170 Q215,155 240,140" fill="none" stroke="'+branchColor+'" stroke-width="7" stroke-linecap="round"/>' +
+    '<path d="M135,180 Q110,155 85,140 Q65,128 45,115" fill="none" stroke="'+branchColor+'" stroke-width="6" stroke-linecap="round"/>' +
+    '<path d="M135,155 Q155,130 180,110 Q200,95 225,80" fill="none" stroke="'+branchColor+'" stroke-width="5" stroke-linecap="round"/>' +
+    '<path d="M132,200 Q120,175 95,165" fill="none" stroke="'+branchColor+'" stroke-width="5" stroke-linecap="round"/>' +
+    // Small twigs
+    '<path d="M70,210 Q55,195 40,200" fill="none" stroke="'+branchColor+'" stroke-width="3" stroke-linecap="round"/>' +
+    '<path d="M85,140 Q70,125 55,130" fill="none" stroke="'+branchColor+'" stroke-width="3" stroke-linecap="round"/>' +
+    '<path d="M190,170 Q200,155 215,160" fill="none" stroke="'+branchColor+'" stroke-width="3" stroke-linecap="round"/>' +
+    '<path d="M180,110 Q190,95 200,100" fill="none" stroke="'+branchColor+'" stroke-width="3" stroke-linecap="round"/>' +
+    '<path d="M135,150 Q140,120 155,95 Q165,75 160,55" fill="none" stroke="'+branchColor+'" stroke-width="4" stroke-linecap="round"/>' +
+    '<path d="M155,95 Q170,80 185,70" fill="none" stroke="'+branchColor+'" stroke-width="3" stroke-linecap="round"/>' +
+    '<path d="M140,120 Q120,105 105,100" fill="none" stroke="'+branchColor+'" stroke-width="3" stroke-linecap="round"/>' +
+    // Flower clusters on branch tips and along branches
+    blossom(25, 172, 22) +
+    blossom(38, 198, 18) +
+    blossom(65, 205, 20) +
+    blossom(42, 112, 20) +
+    blossom(58, 128, 18) +
+    blossom(82, 138, 22) +
+    blossom(92, 162, 17) +
+    blossom(240, 135, 22) +
+    blossom(215, 155, 19) +
+    blossom(195, 168, 20) +
+    blossom(225, 75, 20) +
+    blossom(200, 95, 18) +
+    blossom(185, 108, 21) +
+    blossom(185, 65, 16) +
+    blossom(160, 50, 20) +
+    blossom(145, 75, 17) +
+    blossom(105, 95, 19) +
+    blossom(120, 108, 16) +
+    blossom(130, 148, 18) +
+    blossom(148, 130, 15) +
+    blossom(55, 127, 14) +
+    blossom(215, 158, 14) +
+    blossom(170, 88, 16) +
+    blossom(110, 150, 15) +
+    // Extra scattered blossoms for fullness
+    blossom(35, 155, 15) +
+    blossom(75, 185, 14) +
+    blossom(100, 178, 13) +
+    blossom(230, 118, 15) +
+    blossom(165, 60, 13) +
+    blossom(125, 85, 14) +
+    '</svg>';
+}
+
+// Smaller branch for side decorations
+function sakuraBranchSVG(w, h, flip) {
+  var bc = '#8d6e63', pc = '#f8bbd0', cc = '#ec407a';
+  function bl(cx,cy,r) {
+    var s='';
+    for(var a=0;a<360;a+=72){var rd=a*Math.PI/180;var px=cx+Math.cos(rd)*r*.5;var py=cy+Math.sin(rd)*r*.5;
+    s+='<ellipse cx="'+px+'" cy="'+py+'" rx="'+(r*.4)+'" ry="'+(r*.65)+'" fill="'+(['#f8bbd0','#ffc1d4','#ffcdd2'])[a%3]+'" opacity=".8" transform="rotate('+a+','+px+','+py+')"/>';}
+    s+='<circle cx="'+cx+'" cy="'+cy+'" r="'+(r*.22)+'" fill="'+cc+'" opacity=".7"/>';return s;
+  }
+  var tf = flip ? ' transform="scale(-1,1) translate(-200,0)"' : '';
+  return '<svg viewBox="0 0 200 160" width="'+w+'" height="'+h+'"><g'+tf+'>' +
+    '<path d="M0,140 Q40,130 80,110 Q120,90 150,60 Q170,40 185,20" fill="none" stroke="'+bc+'" stroke-width="5" stroke-linecap="round"/>' +
+    '<path d="M80,110 Q90,90 110,80" fill="none" stroke="'+bc+'" stroke-width="3" stroke-linecap="round"/>' +
+    '<path d="M120,85 Q130,70 145,65" fill="none" stroke="'+bc+'" stroke-width="3" stroke-linecap="round"/>' +
+    '<path d="M150,60 Q160,50 175,48" fill="none" stroke="'+bc+'" stroke-width="2.5" stroke-linecap="round"/>' +
+    bl(185,18,16) + bl(175,45,14) + bl(148,58,16) + bl(145,62,13) +
+    bl(112,78,15) + bl(108,82,12) + bl(82,108,15) + bl(58,122,13) +
+    bl(30,135,14) + bl(165,35,12) + bl(130,72,11) + bl(95,95,13) +
+    '</g></svg>';
+}
+
+// ========== SVG BUILDERS ==========
+function sakuraSVG(size, color1, color2) {
+  color1 = color1 || '#f8bbd0';
+  color2 = color2 || '#ec407a';
+  return '<svg viewBox="0 0 100 100" width="'+size+'" height="'+size+'"><g transform="translate(50,50)">' +
+    [0,72,144,216,288].map(a => '<ellipse cx="0" cy="-18" rx="11" ry="18" fill="'+color1+'" opacity=".85" transform="rotate('+a+')"/>').join('') +
+    '<circle cx="0" cy="0" r="7" fill="'+color2+'"/></g></svg>';
+}
+
+function catPairSVG(w) {
+  w = w || 120;
+  var h = Math.round(w * 0.6);
+  // Boy cat (left) - darker, no bow
+  // Girl cat (right) - lighter, with bow
+  return '<svg viewBox="0 0 120 72" width="'+w+'" height="'+h+'">' +
+    // Boy cat
+    '<g transform="translate(30,36)">' +
+    '<ellipse cx="0" cy="10" rx="14" ry="12" fill="#8d6e63"/>' + // body
+    '<circle cx="0" cy="-4" r="10" fill="#8d6e63"/>' + // head
+    '<polygon points="-9,-11 -5,-22 -1,-11" fill="#8d6e63"/>' + // ear L
+    '<polygon points="-7,-13 -5,-20 -3,-13" fill="#f8bbd0"/>' + // ear inner L
+    '<polygon points="1,-11 5,-22 9,-11" fill="#8d6e63"/>' + // ear R
+    '<polygon points="3,-13 5,-20 7,-13" fill="#f8bbd0"/>' + // ear inner R
+    '<circle cx="-3.5" cy="-5" r="1.5" fill="#1a1a1a"/>' + // eye L
+    '<circle cx="3.5" cy="-5" r="1.5" fill="#1a1a1a"/>' + // eye R
+    '<ellipse cx="0" cy="-2" rx="1.2" ry=".8" fill="#f48fb1"/>' + // nose
+    '<path d="M-2,0 Q0,3 2,0" fill="none" stroke="#5d4037" stroke-width=".8"/>' + // mouth
+    '<line x1="-12" y1="-3" x2="-5" y2="-2" stroke="#a1887f" stroke-width=".5"/>' + // whisker
+    '<line x1="-12" y1="0" x2="-5" y2="0" stroke="#a1887f" stroke-width=".5"/>' +
+    '<line x1="5" y1="-2" x2="12" y2="-3" stroke="#a1887f" stroke-width=".5"/>' +
+    '<line x1="5" y1="0" x2="12" y2="0" stroke="#a1887f" stroke-width=".5"/>' +
+    '<path d="M-14,14 Q-20,0 -14,-4" fill="none" stroke="#8d6e63" stroke-width="3" stroke-linecap="round"/>' + // tail
+    '</g>' +
+    // Girl cat
+    '<g transform="translate(90,36)">' +
+    '<ellipse cx="0" cy="10" rx="14" ry="12" fill="#ffab91"/>' + // body
+    '<circle cx="0" cy="-4" r="10" fill="#ffab91"/>' + // head
+    '<polygon points="-9,-11 -5,-22 -1,-11" fill="#ffab91"/>' +
+    '<polygon points="-7,-13 -5,-20 -3,-13" fill="#fce4ec"/>' +
+    '<polygon points="1,-11 5,-22 9,-11" fill="#ffab91"/>' +
+    '<polygon points="3,-13 5,-20 7,-13" fill="#fce4ec"/>' +
+    '<circle cx="-3.5" cy="-5" r="1.5" fill="#1a1a1a"/>' +
+    '<circle cx="3.5" cy="-5" r="1.5" fill="#1a1a1a"/>' +
+    '<ellipse cx="0" cy="-2" rx="1.2" ry=".8" fill="#f48fb1"/>' +
+    '<path d="M-2,0 Q0,3 2,0" fill="none" stroke="#d7856a" stroke-width=".8"/>' +
+    '<line x1="-12" y1="-3" x2="-5" y2="-2" stroke="#e0a08a" stroke-width=".5"/>' +
+    '<line x1="-12" y1="0" x2="-5" y2="0" stroke="#e0a08a" stroke-width=".5"/>' +
+    '<line x1="5" y1="-2" x2="12" y2="-3" stroke="#e0a08a" stroke-width=".5"/>' +
+    '<line x1="5" y1="0" x2="12" y2="0" stroke="#e0a08a" stroke-width=".5"/>' +
+    '<path d="M14,14 Q20,0 14,-4" fill="none" stroke="#ffab91" stroke-width="3" stroke-linecap="round"/>' +
+    // Bow on girl cat
+    '<g transform="translate(7,-14)">' +
+    '<path d="M0,0 Q-6,-5 -3,-9 Q0,-6 0,0" fill="#ec407a"/>' +
+    '<path d="M0,0 Q6,-5 3,-9 Q0,-6 0,0" fill="#ec407a"/>' +
+    '<circle cx="0" cy="0" r="1.5" fill="#d4456a"/>' +
+    '</g>' +
+    '</g>' +
+    // Heart between them
+    '<g transform="translate(60,20)">' +
+    '<path d="M0,4 C0,0 -5,-3 -5,1 C-5,5 0,8 0,8 C0,8 5,5 5,1 C5,-3 0,0 0,4Z" fill="#f48fb1" opacity=".6"/>' +
+    '</g>' +
+    '</svg>';
+}
+
+// ========== PLACE SAKURA & CATS ==========
+// Hero flower
+document.getElementById('heroFlower').innerHTML = sakuraSVG(60, '#f8bbd0', '#ec407a');
+// Hero cats
+document.getElementById('heroCats').innerHTML = catPairSVG(140);
+// Since sakura
+document.getElementById('sinceSakuraL').innerHTML = sakuraSVG(16);
+document.getElementById('sinceSakuraR').innerHTML = sakuraSVG(16);
+
+// Timeline dots (alternating sakura flowers and cat paw SVGs)
+var dots = document.querySelectorAll('.tl-dot');
+dots.forEach(function(d, i) {
+  if (i % 2 === 0) {
+    d.innerHTML = sakuraSVG(22, '#f8bbd0', '#ec407a');
+  } else {
+    d.innerHTML = sakuraSVG(22, '#ffcdd2', '#f48fb1');
+  }
+});
+
+// Cat dividers
+var cdivs = document.querySelectorAll('.cdiv');
+var catTxts = [
+  '', '', 'meow year!', "purr-fect Valentine's", 'cherry blossom season',
+  'napping in the sun together', 'cats in the sunshine', 'warm summer kitties',
+  'two cats at the Getty', 'strawberry picking kitties', '', 'cozy holiday kitties',
+  'forever and ever', "Happy Valentine's Day"
+];
+cdivs.forEach(function(cd, i) {
+  var scene = document.createElement('div');
+  scene.className = 'scene';
+  scene.innerHTML = sakuraSVG(20) + catPairSVG(100) + sakuraSVG(20);
+  cd.appendChild(scene);
+  if (catTxts[i]) {
+    var txt = document.createElement('span');
+    txt.className = 'txt';
+    txt.textContent = catTxts[i];
+    cd.appendChild(txt);
+  }
+});
+
+// Milestone flowers + cats
+['mf0','mf1','mf2'].forEach(function(id) {
+  var el = document.getElementById(id);
+  if (el) el.innerHTML = sakuraSVG(32) + ' ' + sakuraSVG(28, '#ffcdd2', '#f48fb1') + ' ' + sakuraSVG(32);
+});
+['mc0','mc1','mc2'].forEach(function(id) {
+  var el = document.getElementById(id);
+  if (el) el.innerHTML = catPairSVG(90);
+});
+
+// Ending flower + cats
+document.getElementById('endFlower').innerHTML = sakuraSVG(50, '#f8bbd0', '#ec407a');
+document.getElementById('endCats').innerHTML = sakuraSVG(24) + ' ' + catPairSVG(120) + ' ' + sakuraSVG(24);
+
+// Month pills - add sakura to each
+document.querySelectorAll('.month .pill').forEach(function(pill) {
+  pill.insertAdjacentHTML('afterbegin', sakuraSVG(16) + '&nbsp;');
+  pill.insertAdjacentHTML('beforeend', '&nbsp;' + sakuraSVG(16));
+});
+
+// ========== PLACE SAKURA TREES ==========
+// Hero - big trees on left and right
+document.getElementById('heroTreeL').innerHTML = sakuraTreeSVG(280, 470);
+document.getElementById('heroTreeR').innerHTML = sakuraTreeSVG(280, 470);
+// Ending - trees
+document.getElementById('endTreeL').innerHTML = sakuraTreeSVG(240, 400);
+document.getElementById('endTreeR').innerHTML = sakuraTreeSVG(240, 400);
+
+// Timeline - place sakura branch decorations along the sides at intervals
+(function() {
+  var tl = document.getElementById('timeline');
+  var tlHeight = tl.scrollHeight || 8000;
+  var interval = 1200;
+  for (var y = 200; y < tlHeight; y += interval) {
+    // Alternate left and right branches
+    var isLeft = (Math.floor(y / interval) % 2 === 0);
+    var branch = document.createElement('div');
+    branch.className = 'tl-tree ' + (isLeft ? 'left' : 'right');
+    branch.style.top = y + 'px';
+    branch.innerHTML = sakuraBranchSVG(180, 140, !isLeft);
+    tl.appendChild(branch);
+  }
+  // Also add a few full trees peeking from the sides
+  var treePosns = [
+    {top: 600, side: 'left'},
+    {top: 2400, side: 'right'},
+    {top: 4200, side: 'left'},
+    {top: 6000, side: 'right'},
+    {top: 7800, side: 'left'},
+  ];
+  treePosns.forEach(function(tp) {
+    var tree = document.createElement('div');
+    tree.className = 'tl-tree ' + tp.side;
+    tree.style.top = tp.top + 'px';
+    tree.style.opacity = '0.12';
+    tree.innerHTML = sakuraTreeSVG(200, 340);
+    tl.appendChild(tree);
+  });
+})();
+
+// ========== FALLING SAKURA PETALS (lots and lots!) ==========
+(function() {
+  var c = document.getElementById('pf');
+  var colors = ['#ffc1d4','#ffaec0','#ffd6e3','#ffe0eb','#f8bbd0','#f48fb1','#fff0f5','#ffcdd2','#fce4ec','#f8c8d8'];
+  var classes = ['a','b','c','d','e','f'];
+  // Layer 1: 120 small-medium petals
+  for (var i = 0; i < 120; i++) {
+    var p = document.createElement('div');
+    p.className = 'petal ' + classes[Math.floor(Math.random() * classes.length)];
+    var sz = 8 + Math.random() * 18;
+    var col = colors[Math.floor(Math.random() * colors.length)];
+    p.style.cssText = 'width:'+sz+'px;height:'+(sz*.6)+'px;left:'+Math.random()*100+'%;background:linear-gradient(135deg,'+col+',#fff);animation-duration:'+(8+Math.random()*18)+'s;animation-delay:'+(Math.random()*25)+'s;box-shadow:0 0 '+(2+Math.random()*5)+'px '+col;
+    c.appendChild(p);
+  }
+  // Layer 2: 40 larger, more visible leaves
+  for (var i = 0; i < 40; i++) {
+    var p = document.createElement('div');
+    p.className = 'petal ' + classes[Math.floor(Math.random() * classes.length)];
+    var sz = 18 + Math.random() * 20;
+    var col = colors[Math.floor(Math.random() * colors.length)];
+    p.style.cssText = 'width:'+sz+'px;height:'+(sz*.55)+'px;left:'+Math.random()*100+'%;background:linear-gradient(135deg,'+col+' 40%,rgba(255,255,255,.7));animation-duration:'+(12+Math.random()*22)+'s;animation-delay:'+(Math.random()*20)+'s;box-shadow:0 1px '+(3+Math.random()*6)+'px '+col+';filter:blur(0.3px)';
+    c.appendChild(p);
+  }
+  // Layer 3: 25 tiny fast petals for depth
+  for (var i = 0; i < 25; i++) {
+    var p = document.createElement('div');
+    p.className = 'petal ' + classes[Math.floor(Math.random() * classes.length)];
+    var sz = 4 + Math.random() * 7;
+    var col = colors[Math.floor(Math.random() * colors.length)];
+    p.style.cssText = 'width:'+sz+'px;height:'+(sz*.65)+'px;left:'+Math.random()*100+'%;background:'+col+';animation-duration:'+(5+Math.random()*10)+'s;animation-delay:'+(Math.random()*15)+'s;filter:blur(1px)';
+    c.appendChild(p);
+  }
+  // Layer 4: 15 SVG sakura flower shapes floating down (full blossoms, not just leaves)
+  for (var i = 0; i < 15; i++) {
+    var p = document.createElement('div');
+    p.className = 'petal ' + classes[Math.floor(Math.random() * classes.length)];
+    var fsz = 14 + Math.random() * 22;
+    p.style.cssText = 'left:'+Math.random()*100+'%;animation-duration:'+(14+Math.random()*24)+'s;animation-delay:'+(Math.random()*30)+'s;border-radius:0;background:none;box-shadow:none';
+    p.innerHTML = sakuraSVG(fsz);
+    c.appendChild(p);
+  }
+})();
+
+// ========== BACKGROUND FLOATING SAKURA LEAVES (layer 2, behind content) ==========
+(function() {
+  var c = document.getElementById('pf2');
+  var colors = ['#ffc1d4','#ffd6e3','#f8bbd0','#fce4ec','#ffaec0','#f8c8d8'];
+  var classes = ['a','b','c','d','e','f'];
+  // 60 large soft background petals
+  for (var i = 0; i < 60; i++) {
+    var p = document.createElement('div');
+    p.className = 'petal ' + classes[Math.floor(Math.random() * classes.length)];
+    var sz = 20 + Math.random() * 30;
+    var col = colors[Math.floor(Math.random() * colors.length)];
+    p.style.cssText = 'width:'+sz+'px;height:'+(sz*.55)+'px;left:'+Math.random()*100+'%;background:linear-gradient(135deg,'+col+',rgba(255,255,255,.6));animation-duration:'+(16+Math.random()*28)+'s;animation-delay:'+(Math.random()*35)+'s;box-shadow:0 0 '+(4+Math.random()*8)+'px '+col+';filter:blur(1.5px)';
+    c.appendChild(p);
+  }
+})();
+
+// ========== HERO SCATTERED SAKURA ==========
+(function() {
+  var c = document.getElementById('heroDeco');
+  var colors = ['#ffc1d4','#ffd6e3','#ffe0eb','#f8bbd0'];
+  for (var i = 0; i < 30; i++) {
+    var d = document.createElement('div');
+    d.style.cssText = 'position:absolute;border-radius:150% 0 150% 0;opacity:.12;width:'+(14+Math.random()*28)+'px;height:'+(10+Math.random()*18)+'px;left:'+Math.random()*100+'%;top:'+Math.random()*100+'%;background:'+colors[Math.floor(Math.random()*colors.length)]+';transform:rotate('+Math.random()*360+'deg)';
+    c.appendChild(d);
+  }
+  // Also add some SVG sakura flowers scattered
+  for (var j = 0; j < 12; j++) {
+    var s = document.createElement('div');
+    s.style.cssText = 'position:absolute;left:'+Math.random()*100+'%;top:'+Math.random()*100+'%;opacity:.08;transform:rotate('+Math.random()*360+'deg)';
+    s.innerHTML = sakuraSVG(20 + Math.random()*30);
+    c.appendChild(s);
+  }
+})();
+
+// ========== SCATTER SAKURA THROUGHOUT TIMELINE ==========
+(function() {
+  var tl = document.getElementById('timeline');
+  var scatter = document.createElement('div');
+  scatter.className = 'sakura-scatter';
+  var colors = ['#ffc1d4','#ffd6e3','#f8bbd0','#ffcdd2'];
+  // Lots of tiny petal shapes
+  for (var i = 0; i < 80; i++) {
+    var d = document.createElement('div');
+    d.className = 'sf';
+    var sz = 8 + Math.random() * 18;
+    d.style.cssText = 'width:'+sz+'px;height:'+(sz*.6)+'px;left:'+Math.random()*100+'%;top:'+Math.random()*100+'%;background:'+colors[Math.floor(Math.random()*colors.length)]+';border-radius:150% 0 150% 0;transform:rotate('+Math.random()*360+'deg)';
+    scatter.appendChild(d);
+  }
+  // SVG sakura flowers scattered
+  for (var j = 0; j < 25; j++) {
+    var s = document.createElement('div');
+    s.className = 'sf';
+    s.style.cssText = 'left:'+Math.random()*100+'%;top:'+Math.random()*100+'%;opacity:.06';
+    s.innerHTML = sakuraSVG(16 + Math.random()*24, colors[Math.floor(Math.random()*colors.length)]);
+    scatter.appendChild(s);
+  }
+  tl.insertBefore(scatter, tl.firstChild);
+})();
+
+// ========== ENVELOPE OPENING ==========
+(function() {
+  var overlay = document.getElementById('envOverlay');
+  var env = document.getElementById('envelope');
+  document.body.style.overflow = 'hidden';
+  // Add sakura to envelope
+  document.getElementById('envHeart').innerHTML = sakuraSVG(30);
+  // Scatter some petals on envelope screen
+  for (var i = 0; i < 20; i++) {
+    var p = document.createElement('div');
+    p.style.cssText = 'position:absolute;border-radius:150% 0 150% 0;pointer-events:none;width:'+(10+Math.random()*20)+'px;height:'+(8+Math.random()*14)+'px;left:'+Math.random()*100+'%;top:'+Math.random()*100+'%;background:'+['#ffc1d4','#ffd6e3','#f8bbd0','#ffe0eb'][Math.floor(Math.random()*4)]+';opacity:'+(0.1+Math.random()*0.2)+';transform:rotate('+Math.random()*360+'deg);animation:pf'+(Math.floor(Math.random()*6)+1)+' '+(12+Math.random()*20)+'s linear infinite';
+    overlay.appendChild(p);
+  }
+  document.getElementById('envWrap').addEventListener('click', function() {
+    env.classList.add('open');
+    setTimeout(function() {
+      overlay.classList.add('gone');
+      document.body.classList.add('site-active');
+      document.body.style.overflow = '';
+    }, 1200);
+  });
+})();
+
+// ========== SCROLL OBSERVER ==========
+var obs = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('vis'); });
+}, { threshold: .1, rootMargin: '0px 0px -20px 0px' });
+document.querySelectorAll('.tl,.grid,.mile,.cdiv,.letter,.reasons').forEach(function(el) { obs.observe(el); });
+
+// ========== PROGRESS BAR ==========
+window.addEventListener('scroll', function() {
+  var p = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+  document.getElementById('pb').style.width = p + '%';
+});
+
+// ========== LIGHTBOX ==========
+function olb(img) { document.getElementById('lbi').src = img.src; document.getElementById('lb').classList.add('on'); document.body.style.overflow='hidden'; }
+function clb() { document.getElementById('lb').classList.remove('on'); document.body.style.overflow=''; }
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') clb(); });
+
+// ========== TYPEWRITER EFFECT ON LOVE LETTER ==========
+(function() {
+  var letterLines = [
+    'From garden selfies to Christmas lights,',
+    'from ice skating rinks to sunset hikes,',
+    'from graduation caps to late night fries --',
+    'every single moment with you is my favorite.',
+    '',
+    'Like sakura petals in the spring breeze,',
+    'our love keeps blooming, soft and free.',
+    '',
+    "Here's to all the chapters we've written",
+    'and all the ones still to come.'
+  ];
+  var container = document.getElementById('letterText');
+  var html = '';
+  letterLines.forEach(function(line, li) {
+    if (line === '') { html += '<br>'; return; }
+    for (var i = 0; i < line.length; i++) {
+      html += '<span class="tw-char">' + (line[i] === ' ' ? '&nbsp;' : line[i]) + '</span>';
+    }
+    if (li < letterLines.length - 1) html += '<br>';
+  });
+  container.innerHTML = html;
+
+  var chars = container.querySelectorAll('.tw-char');
+  var typed = false;
+
+  var twObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting && !typed) {
+        typed = true;
+        var delay = 0;
+        chars.forEach(function(ch, i) {
+          setTimeout(function() { ch.classList.add('show'); }, delay);
+          delay += 30;
+        });
+        // After typewriter finishes, show signature + counter
+        setTimeout(function() {
+          document.getElementById('sigText').style.transition = 'opacity .8s ease';
+          document.getElementById('sigText').style.opacity = '1';
+        }, delay + 200);
+        setTimeout(function() {
+          document.getElementById('liveCounter').style.transition = 'opacity .8s ease';
+          document.getElementById('liveCounter').style.opacity = '1';
+          document.getElementById('counterLabel').style.transition = 'opacity .8s ease';
+          document.getElementById('counterLabel').style.opacity = '1';
+          startConfetti();
+        }, delay + 600);
+      }
+    });
+  }, { threshold: .2 });
+  twObs.observe(document.getElementById('endLetter'));
+})();
+
+// ========== LIVE DAY/HOUR/MIN/SEC COUNTER ==========
+(function() {
+  var start = new Date(2024, 10, 23).getTime();
+  function update() {
+    var now = Date.now();
+    var diff = now - start;
+    var days = Math.floor(diff / 864e5);
+    var hours = Math.floor((diff % 864e5) / 36e5);
+    var mins = Math.floor((diff % 36e5) / 6e4);
+    var secs = Math.floor((diff % 6e4) / 1e3);
+    document.getElementById('cDays').textContent = days;
+    document.getElementById('cHours').textContent = hours;
+    document.getElementById('cMins').textContent = mins;
+    document.getElementById('cSecs').textContent = secs;
+  }
+  update();
+  setInterval(update, 1000);
+})();
+
+// ========== REASONS I LOVE YOU CAROUSEL ==========
+(function() {
+  var reasons = [
+    "The way you scrunch your nose when you laugh",
+    "How you make even the simplest moments feel magical",
+    "Your sleepy voice in the morning is my favorite sound",
+    "You always know exactly how to make me smile",
+    "The way you hold my hand a little tighter in crowds",
+    "How your eyes light up when you talk about things you love",
+    "You make me want to be better every single day",
+    "The way you steal my hoodies and look cuter in them than I do",
+    "How you never let me forget that I'm loved",
+    "Every adventure is better because you're next to me"
+  ];
+  document.getElementById('reasonsFlower').innerHTML = sakuraSVG(32) + ' ' + sakuraSVG(24, '#ffcdd2', '#f48fb1') + ' ' + sakuraSVG(32);
+  var textEl = document.getElementById('reasonText');
+  var dotsEl = document.getElementById('reasonsDots');
+  var idx = 0;
+  // Create dots
+  reasons.forEach(function(_, i) {
+    var dot = document.createElement('span');
+    if (i === 0) dot.classList.add('active');
+    dotsEl.appendChild(dot);
+  });
+  textEl.textContent = reasons[0];
+  var dots = dotsEl.querySelectorAll('span');
+
+  setInterval(function() {
+    textEl.classList.add('fade-out');
+    setTimeout(function() {
+      dots[idx].classList.remove('active');
+      idx = (idx + 1) % reasons.length;
+      textEl.textContent = reasons[idx];
+      dots[idx].classList.add('active');
+      textEl.classList.remove('fade-out');
+      textEl.classList.add('fade-in');
+      setTimeout(function() { textEl.classList.remove('fade-in'); }, 50);
+    }, 500);
+  }, 4000);
+})();
+
+// ========== SPOTIFY MUSIC (Blue by Yng Kai) ==========
+(function() {
+  var btn = document.getElementById('musicBtn');
+  var wrap = document.getElementById('spotifyWrap');
+  var iframe = document.getElementById('spotifyPlayer');
+  var open = false;
+  var loaded = false;
+
+  btn.addEventListener('click', function() {
+    if (!open) {
+      open = true;
+      btn.classList.add('playing');
+      if (!loaded) {
+        iframe.src = 'https://open.spotify.com/embed/track/3be9ACTxtcL6Zm4vJRUiPG?utm_source=generator&theme=0';
+        loaded = true;
+      }
+      wrap.style.opacity = '1';
+      wrap.style.transform = 'translateY(0) scale(1)';
+      wrap.style.pointerEvents = 'auto';
+    } else {
+      open = false;
+      btn.classList.remove('playing');
+      wrap.style.opacity = '0';
+      wrap.style.transform = 'translateY(10px) scale(.95)';
+      wrap.style.pointerEvents = 'none';
+    }
+  });
+})();
+
+// ========== CONFETTI / FIREWORKS ==========
+var confettiStarted = false;
+function startConfetti() {
+  if (confettiStarted) return;
+  confettiStarted = true;
+  var canvas = document.getElementById('confettiCanvas');
+  canvas.classList.add('active');
+  var ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  var particles = [];
+  var colors = ['#ec407a','#f48fb1','#f8bbd0','#ffc1d4','#ffd6e3','#ff80ab','#ff4081','#fff','#ffcdd2','#d4456a'];
+
+  // Create burst of particles
+  for (var i = 0; i < 200; i++) {
+    var angle = Math.random() * Math.PI * 2;
+    var speed = 3 + Math.random() * 8;
+    particles.push({
+      x: canvas.width / 2 + (Math.random() - 0.5) * 200,
+      y: canvas.height / 2 + (Math.random() - 0.5) * 100,
+      vx: Math.cos(angle) * speed,
+      vy: Math.sin(angle) * speed - 3,
+      size: 4 + Math.random() * 8,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      life: 1,
+      decay: 0.005 + Math.random() * 0.01,
+      shape: Math.random() > 0.5 ? 'circle' : 'petal',
+      rotation: Math.random() * 360,
+      rotSpeed: (Math.random() - 0.5) * 10
+    });
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    var alive = false;
+    particles.forEach(function(p) {
+      if (p.life <= 0) return;
+      alive = true;
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += 0.12; // gravity
+      p.vx *= 0.99;
+      p.life -= p.decay;
+      p.rotation += p.rotSpeed;
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rotation * Math.PI / 180);
+      ctx.globalAlpha = Math.max(0, p.life);
+      ctx.fillStyle = p.color;
+      if (p.shape === 'circle') {
+        ctx.beginPath();
+        ctx.arc(0, 0, p.size / 2, 0, Math.PI * 2);
+        ctx.fill();
+      } else {
+        // Petal shape
+        ctx.beginPath();
+        ctx.ellipse(0, 0, p.size / 2, p.size / 3, 0, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.restore();
+    });
+    if (alive) {
+      requestAnimationFrame(animate);
+    } else {
+      canvas.classList.remove('active');
+    }
+  }
+  animate();
+}
+</script>
+</body>
+</html>
