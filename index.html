@@ -851,6 +851,8 @@ document.getElementById('endTreeR').innerHTML = sakuraTreeSVG(240, 400);
       overlay.classList.add('gone');
       document.body.classList.add('site-active');
       document.body.style.overflow = '';
+      // Auto-open Spotify player
+      openSpotify();
     }, 1200);
   });
 })();
@@ -988,30 +990,36 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') clb()
 })();
 
 // ========== SPOTIFY MUSIC (Blue by Yng Kai) ==========
-(function() {
+var spotifyOpen = false;
+var spotifyLoaded = false;
+function openSpotify() {
   var btn = document.getElementById('musicBtn');
   var wrap = document.getElementById('spotifyWrap');
   var iframe = document.getElementById('spotifyPlayer');
-  var open = false;
-  var loaded = false;
-
-  btn.addEventListener('click', function() {
-    if (!open) {
-      open = true;
-      btn.classList.add('playing');
-      if (!loaded) {
-        iframe.src = 'https://open.spotify.com/embed/track/3be9ACTxtcL6Zm4vJRUiPG?utm_source=generator&theme=0';
-        loaded = true;
-      }
-      wrap.style.opacity = '1';
-      wrap.style.transform = 'translateY(0) scale(1)';
-      wrap.style.pointerEvents = 'auto';
-    } else {
-      open = false;
-      btn.classList.remove('playing');
-      wrap.style.opacity = '0';
-      wrap.style.transform = 'translateY(10px) scale(.95)';
-      wrap.style.pointerEvents = 'none';
+  if (!spotifyOpen) {
+    spotifyOpen = true;
+    btn.classList.add('playing');
+    if (!spotifyLoaded) {
+      iframe.src = 'https://open.spotify.com/embed/track/3be9ACTxtcL6Zm4vJRUiPG?utm_source=generator&theme=0';
+      spotifyLoaded = true;
+    }
+    wrap.style.opacity = '1';
+    wrap.style.transform = 'translateY(0) scale(1)';
+    wrap.style.pointerEvents = 'auto';
+  }
+}
+function closeSpotify() {
+  var btn = document.getElementById('musicBtn');
+  var wrap = document.getElementById('spotifyWrap');
+  spotifyOpen = false;
+  btn.classList.remove('playing');
+  wrap.style.opacity = '0';
+  wrap.style.transform = 'translateY(10px) scale(.95)';
+  wrap.style.pointerEvents = 'none';
+}
+(function() {
+  document.getElementById('musicBtn').addEventListener('click', function() {
+    if (!spotifyOpen) { openSpotify(); } else { closeSpotify(); }
     }
   });
 })();
