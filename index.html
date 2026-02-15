@@ -507,24 +507,16 @@ body.site-active a,body.site-active .card img,body.site-active .lb-x,body.site-a
 <div class="spotlight" id="spotlightSection">
   <div class="spot-label"><span id="spotStarL"></span> My Favorite Memory <span id="spotStarR"></span></div>
   <div class="spot-card">
-    <img src="IMG_0555.jpeg" onclick="olb(this)" loading="lazy">
-    <p class="spot-cap">The day we became us</p>
-    <p class="spot-date">November 23, 2024</p>
+    <img src="IMG_2141.jpeg" onclick="olb(this)" loading="lazy">
+    <p class="spot-cap">Walking through the gardens together</p>
+    <p class="spot-date">February 22, 2025</p>
   </div>
-</div>
-
-<!-- ===== REASONS I LOVE YOU ===== -->
-<div class="reasons" id="reasonsSection">
-  <div id="reasonsFlower" style="margin-bottom:8px"></div>
-  <h3>Reasons I Love You</h3>
-  <div class="reasons-card">
-    <p class="reason-text" id="reasonText"></p>
-  </div>
-  <div class="reasons-dots" id="reasonsDots"></div>
 </div>
 
 <!-- ===== VOICE MESSAGE (finale) ===== -->
 <section class="voice-section">
+  <div class="end-tree-l" id="endTreeL"></div>
+  <div class="end-tree-r" id="endTreeR"></div>
   <div class="voice-box">
     <div id="voiceFlower"></div>
     <h3>A message from me to you</h3>
@@ -763,7 +755,9 @@ document.querySelectorAll('.month .pill').forEach(function(pill) {
 // Hero - big trees on left and right
 document.getElementById('heroTreeL').innerHTML = sakuraTreeSVG(280, 470);
 document.getElementById('heroTreeR').innerHTML = sakuraTreeSVG(280, 470);
-// (ending trees removed - voice section is finale)
+// Ending trees (voice section)
+document.getElementById('endTreeL').innerHTML = sakuraTreeSVG(240, 400);
+document.getElementById('endTreeR').innerHTML = sakuraTreeSVG(240, 400);
 
 // Timeline - place sakura branch decorations along the sides at intervals
 (function() {
@@ -987,46 +981,7 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') clb()
   setInterval(update, 1000);
 })();
 
-// ========== REASONS I LOVE YOU CAROUSEL ==========
-(function() {
-  var reasons = [
-    "The way you scrunch your nose when you laugh",
-    "How you make even the simplest moments feel magical",
-    "Your sleepy voice in the morning is my favorite sound",
-    "You always know exactly how to make me smile",
-    "The way you hold my hand a little tighter in crowds",
-    "How your eyes light up when you talk about things you love",
-    "You make me want to be better every single day",
-    "The way you steal my hoodies and look cuter in them than I do",
-    "How you never let me forget that I'm loved",
-    "Every adventure is better because you're next to me"
-  ];
-  document.getElementById('reasonsFlower').innerHTML = sakuraSVG(32) + ' ' + sakuraSVG(24, '#ffcdd2', '#f48fb1') + ' ' + sakuraSVG(32);
-  var textEl = document.getElementById('reasonText');
-  var dotsEl = document.getElementById('reasonsDots');
-  var idx = 0;
-  // Create dots
-  reasons.forEach(function(_, i) {
-    var dot = document.createElement('span');
-    if (i === 0) dot.classList.add('active');
-    dotsEl.appendChild(dot);
-  });
-  textEl.textContent = reasons[0];
-  var dots = dotsEl.querySelectorAll('span');
-
-  setInterval(function() {
-    textEl.classList.add('fade-out');
-    setTimeout(function() {
-      dots[idx].classList.remove('active');
-      idx = (idx + 1) % reasons.length;
-      textEl.textContent = reasons[idx];
-      dots[idx].classList.add('active');
-      textEl.classList.remove('fade-out');
-      textEl.classList.add('fade-in');
-      setTimeout(function() { textEl.classList.remove('fade-in'); }, 50);
-    }, 500);
-  }, 4000);
-})();
+// (reasons carousel removed)
 
 // ========== SPOTIFY MUSIC (Blue by Yng Kai) ==========
 var spotifyOpen = false;
