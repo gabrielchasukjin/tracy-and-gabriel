@@ -1155,15 +1155,30 @@ function startConfetti() {
     { t: 24,   text: '' },
     { t: 25,   text: "Here's to all the chapters we've written" },
     { t: 28.5, text: 'and all the ones still to come.' },
+    { t: 31,   text: '' },
+    { t: 31.5, text: 'Forever yours, Gabriel' },
+    { t: 32.5, text: 'I love you' },
   ];
 
   // Build line elements
-  lines.forEach(function(l) {
+  lines.forEach(function(l, i) {
     var div = document.createElement('div');
     div.className = 'vline';
     if (l.text === '') {
       div.innerHTML = '&nbsp;';
       div.style.height = '8px';
+    } else if (l.text === 'Forever yours, Gabriel') {
+      div.textContent = l.text;
+      div.style.fontFamily = "'Dancing Script', cursive";
+      div.style.fontSize = 'clamp(22px,4vw,30px)';
+      div.style.fontWeight = '600';
+      div.style.marginTop = '8px';
+    } else if (l.text === 'I love you') {
+      div.textContent = l.text;
+      div.style.fontFamily = "'Dancing Script', cursive";
+      div.style.fontSize = 'clamp(26px,5vw,36px)';
+      div.style.fontWeight = '700';
+      div.style.color = '#ec407a';
     } else {
       div.textContent = l.text;
     }
